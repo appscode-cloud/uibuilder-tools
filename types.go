@@ -1,651 +1,603 @@
+/*
+Copyright AppsCode Inc. and Contributors
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
 package main
 
-type UIBuilderSchema struct {
-	Steps []struct {
-		Form struct {
-			Elements []struct {
-				Label struct {
-					Text    string `json:"text"`
-					HasLine bool   `json:"hasLine"`
-				} `json:"label,omitempty"`
-				Type  string `json:"type,omitempty"`
-				Label struct {
-					Text string `json:"text"`
-				} `json:"label,omitempty"`
-				Schema struct {
-					Ref string `json:"$ref"`
-				} `json:"schema,omitempty"`
-				Label struct {
-					Text string `json:"text"`
-				} `json:"label,omitempty"`
-				Fetch string `json:"fetch,omitempty"`
-				Label struct {
-					Text string `json:"text"`
-				} `json:"label,omitempty"`
-				IsArray bool `json:"isArray,omitempty"`
-				Keys    struct {
-					Label struct {
-						Text string `json:"text"`
-					} `json:"label"`
-				} `json:"keys,omitempty"`
-				Label struct {
-					Text string `json:"text"`
-				} `json:"label,omitempty"`
-				Values struct {
-					Label struct {
-						Text string `json:"text"`
-					} `json:"label"`
-					Type   string `json:"type"`
-					Schema struct {
-						Ref string `json:"$ref"`
-					} `json:"schema"`
-				} `json:"values,omitempty"`
-				IndividualItemDisabilityCheck string `json:"individualItemDisabilityCheck,omitempty"`
-				Label                         struct {
-					Text string `json:"text"`
-				} `json:"label,omitempty"`
-				Label struct {
-					Text string `json:"text"`
-				} `json:"label,omitempty"`
-				HasDescription bool `json:"hasDescription,omitempty"`
-				Options        []struct {
-					Value       string `json:"value"`
-					Text        string `json:"text"`
-					Description string `json:"description"`
-				} `json:"options,omitempty"`
-				If       string `json:"if,omitempty"`
-				Elements []struct {
-					Label struct {
-						Text    string `json:"text"`
-						HasLine bool   `json:"hasLine"`
-					} `json:"label,omitempty"`
-					Type  string `json:"type"`
-					If    string `json:"if,omitempty"`
-					Label struct {
-						Text string `json:"text"`
-					} `json:"label,omitempty"`
-					Fetch  string `json:"fetch,omitempty"`
-					Schema struct {
-						Ref string `json:"$ref"`
-					} `json:"schema,omitempty"`
-					Label struct {
-						Text string `json:"text"`
-					} `json:"label,omitempty"`
-				} `json:"elements,omitempty"`
-				Label struct {
-					Text string `json:"text"`
-				} `json:"label,omitempty"`
-			} `json:"elements"`
-			Type string `json:"type"`
-		} `json:"form,omitempty"`
-		ID    string `json:"id"`
-		Title string `json:"title"`
-		Form  struct {
-			Elements []struct {
-				Label struct {
-					Text string `json:"text"`
-				} `json:"label,omitempty"`
-				Computed string `json:"computed,omitempty"`
-				OnChange string `json:"onChange,omitempty"`
-				Type     string `json:"type,omitempty"`
-				Schema   struct {
-					Ref string `json:"$ref"`
-				} `json:"schema,omitempty"`
-				HasDescription bool `json:"hasDescription,omitempty"`
-				Options        []struct {
-					Value       string `json:"value"`
-					Text        string `json:"text"`
-					Description string `json:"description"`
-				} `json:"options,omitempty"`
-				If       string `json:"if,omitempty"`
-				Elements []struct {
-					Label struct {
-						Text string `json:"text"`
-					} `json:"label"`
-					Type   string `json:"type"`
-					Schema struct {
-						Ref string `json:"$ref"`
-					} `json:"schema"`
-				} `json:"elements,omitempty"`
-			} `json:"elements"`
-			Discriminator struct {
-				ActiveDatabaseMode struct {
-					Type    string `json:"type"`
-					Default string `json:"default"`
-				} `json:"activeDatabaseMode"`
-			} `json:"discriminator"`
-			Type string `json:"type"`
-		} `json:"form,omitempty"`
-		Form struct {
-			Elements []struct {
-				Type  string `json:"type"`
-				Label struct {
-					Text string `json:"text"`
-				} `json:"label,omitempty"`
-				Schema struct {
-					Ref string `json:"$ref"`
-				} `json:"schema,omitempty"`
-				Computed string `json:"computed,omitempty"`
-				OnChange string `json:"onChange,omitempty"`
-				If       string `json:"if,omitempty"`
-				Elements []struct {
-					Label struct {
-						Text string `json:"text"`
-					} `json:"label,omitempty"`
-					Type   string `json:"type"`
-					Schema struct {
-						Ref string `json:"$ref"`
-					} `json:"schema,omitempty"`
-					Elements []struct {
-						Label struct {
-							Text string `json:"text"`
-						} `json:"label"`
-						Disabled bool   `json:"disabled,omitempty"`
-						Computed string `json:"computed,omitempty"`
-						Type     string `json:"type"`
-						Schema   struct {
-							Ref string `json:"$ref"`
-						} `json:"schema"`
-						Options []struct {
-							Text  string `json:"text"`
-							Value string `json:"value"`
-						} `json:"options,omitempty"`
-						If    string `json:"if,omitempty"`
-						Fetch string `json:"fetch,omitempty"`
-					} `json:"elements,omitempty"`
-					AddFormLabel  string `json:"addFormLabel,omitempty"`
-					TableContents []struct {
-						Type          string `json:"type"`
-						TypeOfValue   string `json:"typeOfValue,omitempty"`
-						InTableColumn bool   `json:"inTableColumn,omitempty"`
-						Label         struct {
-							Text string `json:"text"`
-						} `json:"label,omitempty"`
-						Path  string `json:"path,omitempty"`
-						Label struct {
-							Text    string `json:"text"`
-							HasLine bool   `json:"hasLine"`
-						} `json:"label,omitempty"`
-						Label struct {
-							Text         string `json:"text"`
-							IsSubsection bool   `json:"isSubsection"`
-						} `json:"label,omitempty"`
-						Label struct {
-							Text         string `json:"text"`
-							IsSubsection bool   `json:"isSubsection"`
-						} `json:"label,omitempty"`
-						Label struct {
-							Text         string `json:"text"`
-							IsSubsection bool   `json:"isSubsection"`
-						} `json:"label,omitempty"`
-						Label struct {
-							Text         string `json:"text"`
-							IsSubsection bool   `json:"isSubsection"`
-						} `json:"label,omitempty"`
-						Label struct {
-							Text    string `json:"text"`
-							HasLine bool   `json:"hasLine"`
-						} `json:"label,omitempty"`
-						Label struct {
-							Text    string `json:"text"`
-							HasLine bool   `json:"hasLine"`
-						} `json:"label,omitempty"`
-					} `json:"tableContents,omitempty"`
-					Element struct {
-						Label struct {
-							Text string `json:"text"`
-						} `json:"label"`
-						Elements []struct {
-							Label struct {
-								Text string `json:"text"`
-							} `json:"label,omitempty"`
-							Type   string `json:"type"`
-							Schema struct {
-								Ref string `json:"$ref"`
-							} `json:"schema,omitempty"`
-							Label struct {
-								Text    string `json:"text"`
-								HasLine bool   `json:"hasLine"`
-							} `json:"label,omitempty"`
-							CustomClass string `json:"customClass,omitempty"`
-							Elements    []struct {
-								Schema struct {
-									Ref string `json:"$ref"`
-								} `json:"schema"`
-								Type    string `json:"type"`
-								Element struct {
-									Label struct {
-										Text string `json:"text"`
-									} `json:"label"`
-									Schema struct {
-										Ref string `json:"$ref"`
-									} `json:"schema"`
-									Type string `json:"type"`
-								} `json:"element"`
-								Label struct {
-									Text         string `json:"text"`
-									IsSubsection bool   `json:"isSubsection"`
-								} `json:"label"`
-							} `json:"elements,omitempty"`
-							HasLineLabel bool `json:"hasLineLabel,omitempty"`
-							Element      struct {
-								Label struct {
-									Text string `json:"text"`
-								} `json:"label"`
-								Schema struct {
-									Ref string `json:"$ref"`
-								} `json:"schema"`
-								Type string `json:"type"`
-							} `json:"element,omitempty"`
-							Label struct {
-								Text    string `json:"text"`
-								HasLine bool   `json:"hasLine"`
-							} `json:"label,omitempty"`
-							Label struct {
-								Text    string `json:"text"`
-								HasLine bool   `json:"hasLine"`
-							} `json:"label,omitempty"`
-						} `json:"elements"`
-						Type string `json:"type"`
-					} `json:"element,omitempty"`
-				} `json:"elements,omitempty"`
-			} `json:"elements"`
-			Discriminator struct {
-				ConfigureTLS struct {
-					Type    string `json:"type"`
-					Default bool   `json:"default"`
-				} `json:"configureTLS"`
-			} `json:"discriminator"`
-			Type string `json:"type"`
-		} `json:"form,omitempty"`
-		Form struct {
-			Type          string `json:"type"`
-			Discriminator struct {
-				PrePopulateDatabase struct {
-					Type string `json:"type"`
-				} `json:"prePopulateDatabase"`
-			} `json:"discriminator"`
-			Elements []struct {
-				Type  string `json:"type"`
-				Label struct {
-					Text string `json:"text"`
-				} `json:"label,omitempty"`
-				Schema struct {
-					Ref string `json:"$ref"`
-				} `json:"schema,omitempty"`
-				Options []struct {
-					Text  string `json:"text"`
-					Value string `json:"value"`
-				} `json:"options,omitempty"`
-				Computed      string `json:"computed,omitempty"`
-				OnChange      string `json:"onChange,omitempty"`
-				If            string `json:"if,omitempty"`
-				Discriminator struct {
-					DataSource struct {
-						Type string `json:"type"`
-					} `json:"dataSource"`
-				} `json:"discriminator,omitempty"`
-				Elements []struct {
-					Type  string `json:"type"`
-					Label struct {
-						Text string `json:"text"`
-					} `json:"label,omitempty"`
-					Schema struct {
-						Ref string `json:"$ref"`
-					} `json:"schema,omitempty"`
-					Options []struct {
-						Text  string `json:"text"`
-						Value string `json:"value"`
-					} `json:"options,omitempty"`
-					Computed      string `json:"computed,omitempty"`
-					OnChange      string `json:"onChange,omitempty"`
-					If            string `json:"if,omitempty"`
-					Discriminator struct {
-						SourceVolumeType struct {
-							Type string `json:"type"`
-						} `json:"sourceVolumeType"`
-					} `json:"discriminator,omitempty"`
-					Elements []struct {
-						Type  string `json:"type"`
-						Label struct {
-							Text string `json:"text"`
-						} `json:"label,omitempty"`
-						Schema struct {
-							Ref string `json:"$ref"`
-						} `json:"schema,omitempty"`
-						Label struct {
-							Text    string `json:"text"`
-							HasLine bool   `json:"hasLine"`
-						} `json:"label,omitempty"`
-						Options []struct {
-							Text  string `json:"text"`
-							Value string `json:"value"`
-						} `json:"options,omitempty"`
-						Computed string `json:"computed,omitempty"`
-						OnChange string `json:"onChange,omitempty"`
-						If       string `json:"if,omitempty"`
-						Fetch    string `json:"fetch,omitempty"`
-					} `json:"elements,omitempty"`
-				} `json:"elements,omitempty"`
-			} `json:"elements"`
-		} `json:"form,omitempty"`
-		Form struct {
-			Type          string `json:"type"`
-			Discriminator struct {
-				ScheduleBackup struct {
-					Type string `json:"type"`
-				} `json:"scheduleBackup"`
-			} `json:"discriminator"`
-			Elements []struct {
-				Type  string `json:"type"`
-				Label struct {
-					Text string `json:"text"`
-				} `json:"label"`
-				Schema struct {
-					Ref string `json:"$ref"`
-				} `json:"schema,omitempty"`
-				Options []struct {
-					Text  string `json:"text"`
-					Value string `json:"value"`
-				} `json:"options,omitempty"`
-				Computed      string `json:"computed,omitempty"`
-				OnChange      string `json:"onChange,omitempty"`
-				If            string `json:"if,omitempty"`
-				Discriminator struct {
-					BackupInvoker struct {
-						Type string `json:"type"`
-					} `json:"backupInvoker"`
-				} `json:"discriminator,omitempty"`
-				Elements []struct {
-					Type  string `json:"type"`
-					Label struct {
-						Text string `json:"text"`
-					} `json:"label"`
-					Schema struct {
-						Ref string `json:"$ref"`
-					} `json:"schema,omitempty"`
-					Options []struct {
-						Text  string `json:"text"`
-						Value string `json:"value"`
-					} `json:"options,omitempty"`
-					Computed      string `json:"computed,omitempty"`
-					OnChange      string `json:"onChange,omitempty"`
-					If            string `json:"if,omitempty"`
-					Discriminator struct {
-						TargetType struct {
-							Type string `json:"type"`
-						} `json:"targetType"`
-					} `json:"discriminator,omitempty"`
-					Elements []struct {
-						Type  string `json:"type"`
-						Label struct {
-							Text    string `json:"text"`
-							HasLine bool   `json:"hasLine"`
-						} `json:"label,omitempty"`
-						Label struct {
-							Text string `json:"text"`
-						} `json:"label,omitempty"`
-						Schema struct {
-							Ref string `json:"$ref"`
-						} `json:"schema,omitempty"`
-						Disabled bool `json:"disabled,omitempty"`
-						Label    struct {
-							Text string `json:"text"`
-						} `json:"label,omitempty"`
-						Computed      string `json:"computed,omitempty"`
-						Discriminator struct {
-							RepositoryChoise struct {
-								Type string `json:"type"`
-							} `json:"repositoryChoise"`
-						} `json:"discriminator,omitempty"`
-						Elements []struct {
-							Type  string `json:"type"`
-							Label struct {
-								Text         string `json:"text"`
-								HasLine      bool   `json:"hasLine"`
-								IsSubsection bool   `json:"isSubsection"`
-							} `json:"label,omitempty"`
-							Schema struct {
-								Ref string `json:"$ref"`
-							} `json:"schema,omitempty"`
-							Options []struct {
-								Text  string `json:"text"`
-								Value string `json:"value"`
-							} `json:"options,omitempty"`
-							Computed string `json:"computed,omitempty"`
-							OnChange string `json:"onChange,omitempty"`
-							If       string `json:"if,omitempty"`
-							Label    struct {
-								Text string `json:"text"`
-							} `json:"label,omitempty"`
-							Fetch         string `json:"fetch,omitempty"`
-							Discriminator struct {
-								BackendType struct {
-									Type string `json:"type"`
-								} `json:"backendType"`
-							} `json:"discriminator,omitempty"`
-							Elements []struct {
-								Type  string `json:"type"`
-								Label struct {
-									Text string `json:"text"`
-								} `json:"label,omitempty"`
-								Schema struct {
-									Ref string `json:"$ref"`
-								} `json:"schema,omitempty"`
-								OnChange string `json:"onChange,omitempty"`
-								Disabled bool   `json:"disabled,omitempty"`
-								Computed string `json:"computed,omitempty"`
-								Label    struct {
-									Text         string `json:"text"`
-									IsSubsection bool   `json:"isSubsection"`
-								} `json:"label,omitempty"`
-								Options []struct {
-									Text  string `json:"text"`
-									Value string `json:"value"`
-								} `json:"options,omitempty"`
-								If       string `json:"if,omitempty"`
-								Elements []struct {
-									Type  string `json:"type"`
-									Label struct {
-										Text string `json:"text"`
-									} `json:"label"`
-									Schema struct {
-										Ref string `json:"$ref"`
-									} `json:"schema"`
-								} `json:"elements,omitempty"`
-								Discriminator struct {
-									VolumeSource struct {
-										Type string `json:"type"`
-									} `json:"volumeSource"`
-								} `json:"discriminator,omitempty"`
-								Fetch string `json:"fetch,omitempty"`
-							} `json:"elements,omitempty"`
-						} `json:"elements,omitempty"`
-						Label struct {
-							Text         string `json:"text"`
-							HasLine      bool   `json:"hasLine"`
-							IsSubsection bool   `json:"isSubsection"`
-						} `json:"label,omitempty"`
-						Label struct {
-							Text string `json:"text"`
-						} `json:"label,omitempty"`
-						Label struct {
-							Text string `json:"text"`
-						} `json:"label,omitempty"`
-						Label struct {
-							Text string `json:"text"`
-						} `json:"label,omitempty"`
-						Label struct {
-							Text string `json:"text"`
-						} `json:"label,omitempty"`
-						Label struct {
-							Text         string `json:"text"`
-							HasLine      bool   `json:"hasLine"`
-							IsSubsection bool   `json:"isSubsection"`
-						} `json:"label,omitempty"`
-						Label struct {
-							Text string `json:"text"`
-						} `json:"label,omitempty"`
-						Label struct {
-							Text string `json:"text"`
-						} `json:"label,omitempty"`
-						Label struct {
-							Text string `json:"text"`
-						} `json:"label,omitempty"`
-						Label struct {
-							Text string `json:"text"`
-						} `json:"label,omitempty"`
-					} `json:"elements,omitempty"`
-					Discriminator struct {
-						BackupBlueprintName struct {
-							Type string `json:"type"`
-						} `json:"backupBlueprintName"`
-						Schedule struct {
-							Type string `json:"type"`
-						} `json:"schedule"`
-						TaskParameters struct {
-							Type                 string `json:"type"`
-							AdditionalProperties struct {
-								Type string `json:"type"`
-							} `json:"additionalProperties"`
-						} `json:"taskParameters"`
-					} `json:"discriminator,omitempty"`
-				} `json:"elements,omitempty"`
-			} `json:"elements"`
-		} `json:"form,omitempty"`
-		Form struct {
-			Elements []struct {
-				Type  string `json:"type"`
-				Label struct {
-					Text string `json:"text"`
-				} `json:"label,omitempty"`
-				Schema struct {
-					Ref string `json:"$ref"`
-				} `json:"schema,omitempty"`
-				Computed string `json:"computed,omitempty"`
-				OnChange string `json:"onChange,omitempty"`
-				If       string `json:"if,omitempty"`
-				Elements []struct {
-					Label struct {
-						Text string `json:"text"`
-					} `json:"label,omitempty"`
-					Schema struct {
-						Ref string `json:"$ref"`
-					} `json:"schema,omitempty"`
-					Type           string `json:"type"`
-					OnChange       string `json:"onChange,omitempty"`
-					HasDescription bool   `json:"hasDescription,omitempty"`
-					Options        []struct {
-						Value       string `json:"value"`
-						Text        string `json:"text"`
-						Description string `json:"description"`
-					} `json:"options,omitempty"`
-					If       string `json:"if,omitempty"`
-					Elements []struct {
-						Label struct {
-							Text    string `json:"text"`
-							HasLine bool   `json:"hasLine"`
-						} `json:"label,omitempty"`
-						Type        string `json:"type"`
-						CustomClass string `json:"customClass,omitempty"`
-						IsArray     bool   `json:"isArray,omitempty"`
-						Schema      struct {
-							Ref string `json:"$ref"`
-						} `json:"schema,omitempty"`
-						Keys struct {
-							Label struct {
-								Text         string `json:"text"`
-								IsSubsection bool   `json:"isSubsection"`
-							} `json:"label"`
-						} `json:"keys,omitempty"`
-						Label struct {
-							Text string `json:"text"`
-						} `json:"label,omitempty"`
-						Values struct {
-							Label struct {
-								Text string `json:"text"`
-							} `json:"label"`
-							Type   string `json:"type"`
-							Schema struct {
-								Ref string `json:"$ref"`
-							} `json:"schema"`
-						} `json:"values,omitempty"`
-						Label struct {
-							Text string `json:"text"`
-						} `json:"label,omitempty"`
-					} `json:"elements,omitempty"`
-					Label struct {
-						Text    string `json:"text"`
-						HasLine bool   `json:"hasLine"`
-					} `json:"label,omitempty"`
-				} `json:"elements,omitempty"`
-				Discriminator struct {
-					CustomizeExporter struct {
-						Type    string `json:"type"`
-						Default bool   `json:"default"`
-					} `json:"customizeExporter"`
-				} `json:"discriminator,omitempty"`
-			} `json:"elements"`
-			Discriminator struct {
-				EnableMonitoring struct {
-					Type    string `json:"type"`
-					Default bool   `json:"default"`
-				} `json:"enableMonitoring"`
-			} `json:"discriminator"`
-			Type string `json:"type"`
-		} `json:"form,omitempty"`
-		Form struct {
-			Elements []struct {
-				Label struct {
-					Text string `json:"text"`
-				} `json:"label,omitempty"`
-				Type   string `json:"type"`
-				Schema struct {
-					Ref string `json:"$ref"`
-				} `json:"schema,omitempty"`
-				Options []struct {
-					Text  string `json:"text"`
-					Value string `json:"value"`
-				} `json:"options,omitempty"`
-				If       string `json:"if,omitempty"`
-				Fetch    string `json:"fetch,omitempty"`
-				Elements []struct {
-					Label struct {
-						Text string `json:"text"`
-					} `json:"label"`
-					Type     string `json:"type"`
-					OnChange string `json:"onChange,omitempty"`
-					Schema   struct {
-						Ref string `json:"$ref"`
-					} `json:"schema"`
-					If       string `json:"if,omitempty"`
-					Computed string `json:"computed,omitempty"`
-					IsArray  bool   `json:"isArray,omitempty"`
-					Keys     struct {
-						Label struct {
-							Text string `json:"text"`
-						} `json:"label"`
-					} `json:"keys,omitempty"`
-					Values struct {
-						Label struct {
-							Text string `json:"text"`
-						} `json:"label"`
-						Type   string `json:"type"`
-						Schema struct {
-							Ref string `json:"$ref"`
-						} `json:"schema"`
-					} `json:"values,omitempty"`
-				} `json:"elements,omitempty"`
-			} `json:"elements"`
-			Discriminator struct {
-				ConfigurationSource struct {
-					Type    string `json:"type"`
-					Default string `json:"default"`
-				} `json:"configurationSource"`
-			} `json:"discriminator"`
-			Type string `json:"type"`
-		} `json:"form,omitempty"`
-	} `json:"steps"`
-	Type            string `json:"type"`
-	HasPreviewPanel bool   `json:"hasPreviewPanel"`
+import (
+	"encoding/json"
+	"fmt"
+)
+
+type UnionElement struct {
+	*LabelElement
+	*InputElement
+	*RadioElement
+	*SelectElement
+	*KeyValueInputForm
+	*SwitchElement
+	*ListInputForm
+	*SingleStepForm
+	*SingleStepFormArray
+	*ConfigureOptionsElement
+	*MultiselectElement
+	*KeyTextAreaInputFormElement
+}
+
+func (u UnionElement) MarshalJSON() ([]byte, error) {
+	switch {
+	case u.LabelElement != nil:
+		return json.Marshal(u.LabelElement)
+	case u.InputElement != nil:
+		return json.Marshal(u.InputElement)
+	case u.RadioElement != nil:
+		return json.Marshal(u.RadioElement)
+	case u.SelectElement != nil:
+		return json.Marshal(u.SelectElement)
+	case u.KeyValueInputForm != nil:
+		return json.Marshal(u.KeyValueInputForm)
+	case u.SwitchElement != nil:
+		return json.Marshal(u.SwitchElement)
+	case u.ListInputForm != nil:
+		return json.Marshal(u.ListInputForm)
+	case u.SingleStepForm != nil:
+		return json.Marshal(u.SingleStepForm)
+	case u.SingleStepFormArray != nil:
+		return json.Marshal(u.SingleStepFormArray)
+	case u.ConfigureOptionsElement != nil:
+		return json.Marshal(u.ConfigureOptionsElement)
+	case u.MultiselectElement != nil:
+		return json.Marshal(u.MultiselectElement)
+	case u.KeyTextAreaInputFormElement != nil:
+		return json.Marshal(u.KeyTextAreaInputFormElement)
+	}
+	return nil, nil
+}
+
+func (u *UnionElement) UnmarshalJSON(data []byte) error {
+	type TypedElement struct {
+		Type string `json:"type"`
+	}
+
+	var t TypedElement
+	err := json.Unmarshal(data, &t)
+	if err != nil {
+		return err
+	}
+	if t.Type == "" {
+		return fmt.Errorf("failed to detect type: %s", string(data))
+	}
+
+	if u == nil {
+		u = new(UnionElement)
+	}
+
+	switch t.Type {
+	case "label-element":
+		var e LabelElement
+		err = json.Unmarshal(data, &e)
+		if err != nil {
+			return err
+		}
+		u.LabelElement = &e
+	case "input":
+		var e InputElement
+		err = json.Unmarshal(data, &e)
+		if err != nil {
+			return err
+		}
+		u.InputElement = &e
+	case "radio":
+		var e RadioElement
+		err = json.Unmarshal(data, &e)
+		if err != nil {
+			return err
+		}
+		u.RadioElement = &e
+	case "select":
+		var e SelectElement
+		err = json.Unmarshal(data, &e)
+		if err != nil {
+			return err
+		}
+		u.SelectElement = &e
+	case "key-value-input-form":
+		var e KeyValueInputForm
+		err = json.Unmarshal(data, &e)
+		if err != nil {
+			return err
+		}
+		u.KeyValueInputForm = &e
+	case "switch":
+		var e SwitchElement
+		err = json.Unmarshal(data, &e)
+		if err != nil {
+			return err
+		}
+		u.SwitchElement = &e
+	case "list-input-form":
+		var e ListInputForm
+		err = json.Unmarshal(data, &e)
+		if err != nil {
+			return err
+		}
+		u.ListInputForm = &e
+	case "single-step-form":
+		var e SingleStepForm
+		err = json.Unmarshal(data, &e)
+		if err != nil {
+			return err
+		}
+		u.SingleStepForm = &e
+	case "single-step-form-array":
+		var e SingleStepFormArray
+		err = json.Unmarshal(data, &e)
+		if err != nil {
+			return err
+		}
+		u.SingleStepFormArray = &e
+	case "configure-options":
+		var e ConfigureOptionsElement
+		err = json.Unmarshal(data, &e)
+		if err != nil {
+			return err
+		}
+		u.ConfigureOptionsElement = &e
+	case "multiselect":
+		var e MultiselectElement
+		err = json.Unmarshal(data, &e)
+		if err != nil {
+			return err
+		}
+		u.MultiselectElement = &e
+	case "key-text-area-input-form":
+		var e KeyTextAreaInputFormElement
+		err = json.Unmarshal(data, &e)
+		if err != nil {
+			return err
+		}
+		u.KeyTextAreaInputFormElement = &e
+	default:
+		return fmt.Errorf("unknown element type %s", t.Type)
+	}
+	return nil
+}
+
+type UnionOptions struct {
+	A []string
+	B []RadioElementOption
+}
+
+func (u UnionOptions) MarshalJSON() ([]byte, error) {
+	if len(u.A) > 0 {
+		return json.Marshal(u.A)
+	} else if len(u.B) > 0 {
+		return json.Marshal(u.B)
+	}
+	return nil, nil
+}
+
+func (u *UnionOptions) UnmarshalJSON(data []byte) error {
+	if data[0] == '[' && data[1] == '{' {
+		return json.Unmarshal(data, &u.B)
+	}
+	return json.Unmarshal(data, &u.A)
+}
+
+/*
+{
+  "label": {
+	 "text": "labels.basic_info",
+	 "hasLine": true
+  },
+  "type": "label-element"
+}
+*/
+type LabelElement struct {
+	If          string `json:"if,omitempty"`
+	CustomClass string `json:"customClass,omitempty"`
+	Label       *Label `json:"label,omitempty"`
+	Type        string `json:"type"`
+}
+
+/*
+   {
+      "if": "showAuthPasswordField",
+      "label": {
+         "text": "labels.database.secret"
+      },
+      "type": "input",
+      "schema": {
+         "$ref": "schema#/properties/resources/properties/secretAuth/properties/metadata/properties/name"
+      }
+   }
+*/
+type InputElement struct {
+	If          string    `json:"if,omitempty"`
+	CustomClass string    `json:"customClass,omitempty"`
+	OnChange    string    `json:"onChange,omitempty"`
+	Computed    string    `json:"computed,omitempty"`
+	Decoder     string    `json:"decoder,omitempty"`
+	Encoder     string    `json:"encoder,omitempty"`
+	Disabled    string    `json:"disabled,omitempty"`
+	HideValue   bool      `json:"hideValue,omitempty"`
+	Label       *Label    `json:"label,omitempty"`
+	Type        string    `json:"type"`
+	Schema      SchemaRef `json:"schema"`
+}
+
+/*
+{
+  "label": {
+	 "text": "labels.terminationPolicy"
+  },
+  "schema": {
+	 "$ref": "schema#/properties/resources/properties/kubedbComMongoDB/properties/spec/properties/terminationPolicy"
+  },
+  "type": "radio",
+  "hasDescription": true,
+  "options": [
+	 {
+		"value": "Delete",
+		"text": "options.terminationPolicy.delete.label",
+		"description": "options.terminationPolicy.delete.description"
+	 },
+	 {
+		"value": "Halt",
+		"text": "options.terminationPolicy.halt.label",
+		"description": "options.terminationPolicy.halt.description"
+	 },
+	 {
+		"value": "WipeOut",
+		"text": "options.terminationPolicy.wipeOut.label",
+		"description": "options.terminationPolicy.wipeOut.description"
+	 },
+	 {
+		"value": "DoNotTerminate",
+		"text": "options.terminationPolicy.doNotTerminate.label",
+		"description": "options.terminationPolicy.doNotTerminate.description"
+	 }
+  ]
+}
+*/
+type RadioElement struct {
+	Label          *Label        `json:"label,omitempty"`
+	Computed       string        `json:"computed,omitempty"`
+	Onchange       string        `json:"onChange,omitempty"`
+	Type           string        `json:"type"`
+	Schema         SchemaRef     `json:"schema"`
+	HasDescription bool          `json:"hasDescription,omitempty"`
+	Options        *UnionOptions `json:"options,omitempty"`
+}
+
+/*
+{
+  "label": {
+	 "text": "labels.database.version"
+  },
+  "fetch": "getMongoDbVersions|catalog.kubedb.com|v1alpha1|mongodbversions",
+  "type": "select",
+  "schema": {
+	 "$ref": "schema#/properties/resources/properties/kubedbComMongoDB/properties/spec/properties/version"
+  }
+}
+*/
+type SelectElement struct {
+	If       string        `json:"if,omitempty"`
+	Label    *Label        `json:"label,omitempty"`
+	Fetch    string        `json:"fetch,omitempty"`
+	Computed string        `json:"computed,omitempty"`
+	OnChange string        `json:"onChange,omitempty"`
+	Type     string        `json:"type"`
+	Schema   SchemaRef     `json:"schema"`
+	Disabled string        `json:"disabled,omitempty"`
+	Options  *UnionOptions `json:"options,omitempty"`
+}
+
+/*
+{
+  "isArray": true,
+  "schema": {
+	 "$ref": "schema#/properties/resources/properties/appApplication/properties/metadata/properties/annotations"
+  },
+  "keys": {
+	 "label": {
+		"text": "labels.annotations.key"
+	 }
+  },
+  "label": {
+	 "text": "labels.annotations.label"
+  },
+  "type": "key-value-input-form",
+  "values": {
+	 "label": {
+		"text": "labels.annotations.value"
+	 },
+	 "type": "input",
+	 "schema": {
+		"$ref": "schema#/properties/resources/properties/appApplication/properties/metadata/properties/annotations/additionalProperties"
+	 }
+  }
+}
+*/
+type KeyValueInputForm struct {
+	IsArray                       bool              `json:"isArray,omitempty"`
+	OnChange                      string            `json:"onChange,omitempty"`
+	Computed                      string            `json:"computed,omitempty"`
+	Schema                        SchemaRef         `json:"schema"`
+	Keys                          KVInputFormKeys   `json:"keys,omitempty"`
+	Label                         *Label            `json:"label,omitempty"`
+	Type                          string            `json:"type"`
+	Values                        KVInputFormValues `json:"values,omitempty"`
+	Individualitemdisabilitycheck string            `json:"individualItemDisabilityCheck,omitempty"`
+}
+
+/*
+   {
+      "type": "switch",
+      "label": {
+         "text": "labels.enable_tls"
+      },
+      "schema": {
+         "$ref": "discriminator#/configureTLS"
+      },
+      "computed": "isValueExistInModel|/resources/kubedbComMongoDB/spec/tls",
+      "onChange": "onTlsConfigureChange"
+   }
+*/
+type SwitchElement struct {
+	Type     string    `json:"type"`
+	Label    *Label    `json:"label,omitempty"`
+	Schema   SchemaRef `json:"schema"`
+	Computed string    `json:"computed,omitempty"`
+	Onchange string    `json:"onChange,omitempty"`
+}
+
+/*
+   {
+      "if": "showNewSecretCreateField",
+      "type": "single-step-form",
+      "schema": {
+         "$ref": "schema#/properties/resources/properties/secretAuth/properties/data"
+      },
+      "elements": [
+         {
+            "label": {
+               "text": "labels.new_secret_password",
+               "hasLine": true
+            },
+            "type": "label-element"
+         },
+         {
+            "if": "showNewSecretCreateField",
+            "label": {
+               "text": "labels.password"
+            },
+            "type": "input",
+            "schema": {
+               "$ref": "schema#/properties/resources/properties/secretAuth/properties/data/properties/password"
+            }
+         }
+      ]
+   }
+*/
+type SingleStepForm struct {
+	Type          string                   `json:"type"`
+	Label         *Label                   `json:"label,omitempty"`
+	Schema        *SchemaRef               `json:"schema,omitempty"`
+	If            string                   `json:"if,omitempty"`
+	Discriminator map[string]Discriminator `json:"discriminator,omitempty"`
+	Elements      []UnionElement           `json:"elements,omitempty"`
+	Element       *SingleStepFormElement   `json:"element,omitempty"`
+	CustomClass   string                   `json:"customClass,omitempty"`
+}
+
+type SingleStepFormElement struct {
+	Discriminator map[string]Discriminator `json:"discriminator,omitempty"`
+	Elements      []UnionElement           `json:"elements,omitempty"`
+}
+
+type TableContentEntry struct {
+	Type          string              `json:"type"`
+	Computed      string              `json:"computed,omitempty"`
+	TypeOfValue   string              `json:"typeOfValue,omitempty"`
+	InTableColumn bool                `json:"inTableColumn,omitempty"`
+	Path          string              `json:"path,omitempty"`
+	Label         *Label              `json:"label,omitempty"`
+	TableContents []TableContentEntry `json:"tableContents,omitempty"`
+}
+
+type SingleStepFormArray struct {
+	Type          string              `json:"type"`
+	Label         *Label              `json:"label,omitempty"`
+	AddFormLabel  string              `json:"addFormLabel,omitempty"`
+	CustomClass   string              `json:"customClass,omitempty"`
+	Schema        SchemaRef           `json:"schema"`
+	TableContents []TableContentEntry `json:"tableContents,omitempty"`
+	Element       struct {
+		Discriminator map[string]Discriminator `json:"discriminator,omitempty"`
+		Label         *Label                   `json:"label,omitempty"`
+		Elements      []UnionElement           `json:"elements,omitempty"`
+		Type          string                   `json:"type,omitempty"`
+	} `json:"element,omitempty"`
+	Discriminator map[string]Discriminator `json:"discriminator,omitempty"`
+}
+
+/*
+   {
+      "schema": {
+         "$ref": "schema#/properties/resources/properties/kubedbComMongoDB/properties/spec/properties/tls/properties/certificates/items/properties/dnsNames"
+      },
+      "hasLineLabel": true,
+      "type": "list-input-form",
+      "element": {
+         "label": {
+            "text": "labels.dns_name"
+         },
+         "schema": {
+            "$ref": "schema#/properties/resources/properties/kubedbComMongoDB/properties/spec/properties/tls/properties/certificates/items/properties/dnsNames/items"
+         },
+         "type": "input"
+      },
+      "label": {
+         "text": "labels.dns_names",
+         "hasLine": true
+      }
+   }
+*/
+type ListInputForm struct {
+	If           string       `json:"if,omitempty"`
+	Schema       SchemaRef    `json:"schema"`
+	Haslinelabel bool         `json:"hasLineLabel,omitempty"`
+	Type         string       `json:"type"`
+	Element      InputElement `json:"element"`
+	Label        *Label       `json:"label"`
+}
+
+type MultiStepForm struct {
+	Type            string              `json:"type"`
+	HasPreviewPanel bool                `json:"hasPreviewPanel,omitempty"`
+	Steps           []MultiStepFormStep `json:"steps"`
+}
+
+type MultiStepFormStep struct {
+	ID    string         `json:"id,omitempty"`
+	Title string         `json:"title"`
+	Form  SingleStepForm `json:"form"`
+}
+
+type SchemaRef struct {
+	Ref string `json:"$ref,omitempty"`
+}
+
+type Label struct {
+	Text         string `json:"text,omitempty"`
+	HasLine      bool   `json:"hasLine,omitempty"`
+	IsSubsection bool   `json:"isSubsection,omitempty"`
+}
+
+type RadioElementOption struct {
+	Value       string `json:"value,omitempty"`
+	Text        string `json:"text,omitempty"`
+	Description string `json:"description,omitempty"`
+}
+
+type KVInputFormKeys struct {
+	Label Label `json:"label"`
+}
+
+type KVInputFormValues struct {
+	Label  *Label    `json:"label"`
+	Type   string    `json:"type"`
+	Schema SchemaRef `json:"schema"`
+}
+
+type Discriminator struct {
+	Type                 string                `json:"type,omitempty"`
+	AdditionalProperties *AdditionalProperties `json:"additionalProperties,omitempty"`
+	Default              string                `json:"default,omitempty"`
+}
+
+type AdditionalProperties struct {
+	Type string `json:"type"`
+}
+
+type ConfigureOptionsElement struct {
+	Cluster         ClusterRef     `json:"cluster"`
+	HasDependencies bool           `json:"hasDependencies"`
+	HasDescription  bool           `json:"hasDescription"`
+	Options         []EditorOption `json:"options"`
+	Owner           OwnerRef       `json:"owner"`
+	Schema          SchemaRef      `json:"schema"`
+	Type            string         `json:"type"`
+}
+
+type ClusterRef struct {
+	Ref string `json:"$ref"`
+}
+
+type OwnerRef struct {
+	Ref string `json:"$ref"`
+}
+
+type EditorOption struct {
+	Description  string                   `json:"description,omitempty"`
+	Text         string                   `json:"text"`
+	Value        string                   `json:"value"`
+	Dependencies []EditorOptionDependency `json:"dependencies,omitempty"`
+}
+
+type EditorOptionDependency struct {
+	Group    string `json:"group"`
+	Name     string `json:"name"`
+	Resource string `json:"resource"`
+	URL      string `json:"url"`
+	Version  string `json:"version"`
+}
+
+/*
+{
+   "fetch": "getImagePullSecrets",
+   "label": {
+      "text": "labels.image_pull_secrets"
+   },
+   "schema": {
+      "$ref": "schema#/properties/resources/properties/kubedbComMongoDB/properties/spec/properties/shardTopology/properties/shard/properties/podTemplate/properties/spec/properties/imagePullSecrets"
+   },
+   "type": "multiselect"
+}
+*/
+type MultiselectElement struct {
+	Computed string    `json:"computed,omitempty"`
+	Fetch    string    `json:"fetch"`
+	Label    *Label    `json:"label,omitempty"`
+	Schema   SchemaRef `json:"schema"`
+	Type     string    `json:"type"`
+}
+
+/*
+{
+    "isArray": true,
+    "keys": {
+        "label": {
+            "text": "labels.labels.key"
+        }
+    },
+    "label": {
+        "text": "labels.configuration_files"
+    },
+    "schema": {
+        "$ref": "schema#/properties/resources/properties/secret_config/properties/stringData"
+    },
+    "type": "key-text-area-input-form",
+    "values": {
+        "label": {
+            "text": "labels.labels.value"
+        },
+        "schema": {
+            "$ref": "schema#/properties/resources/properties/secret_config/properties/stringData/additionalProperties"
+        },
+        "type": "input"
+    }
+}
+*/
+type KeyTextAreaInputFormElement struct {
+	IsArray bool              `json:"isArray"`
+	Keys    KVInputFormKeys   `json:"keys"`
+	Label   *Label            `json:"label,omitempty"`
+	Schema  SchemaRef         `json:"schema"`
+	Type    string            `json:"type"`
+	Values  KVInputFormValues `json:"values"`
 }

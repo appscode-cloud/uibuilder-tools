@@ -3,19 +3,19 @@ module kmodules.xyz/uibuilder-schema-checker
 go 1.16
 
 require (
-	github.com/gohugoio/hugo v0.80.0
-	github.com/olekukonko/tablewriter v0.0.4
+	github.com/kr/pretty v0.2.1 // indirect
+	github.com/onsi/ginkgo v1.15.0 // indirect
+	github.com/onsi/gomega v1.10.5 // indirect
+	github.com/sergi/go-diff v1.1.0 // indirect
 	github.com/spf13/cobra v1.1.1
-	github.com/yuin/goldmark v1.3.2
+	github.com/stretchr/testify v1.6.1 // indirect
+	github.com/yudai/gojsondiff v1.0.0
+	golang.org/x/sys v0.0.0-20210119212857-b64e53b001e4 // indirect
+	golang.org/x/text v0.3.4 // indirect
+	gopkg.in/yaml.v2 v2.4.0 // indirect
 	k8s.io/apimachinery v0.18.9
-	k8s.io/cli-runtime v0.18.9
-	k8s.io/component-base v0.18.9
-	k8s.io/kubectl v0.18.9
 	kmodules.xyz/client-go v0.0.0-20210315112949-a05d2cc96f28
-	kmodules.xyz/resource-metadata v0.4.18-0.20210315120400-254abb0fa3ed
-	kmodules.xyz/resource-validator v0.0.0-20210224121851-c4fb322bda20
-	kubedb.dev/installer v0.17.1-0.20210317180935-18344eef9472
-	stash.appscode.dev/installer v0.12.0
+	sigs.k8s.io/yaml v1.2.0
 )
 
 replace bitbucket.org/ww/goautoneg => gomodules.xyz/goautoneg v0.0.0-20120707110453-a547fc61f48d

@@ -1,0 +1,120 @@
+hasPreviewPanel: true
+steps:
+- form:
+    elements:
+    - label:
+        hasLine: true
+        text: labels.basic_info
+      type: label-element
+    - label:
+        text: labels.database.name
+      schema:
+        $ref: schema#/properties/metadata/properties/release/properties/name
+      type: input
+    - fetch: getResources|core|v1|namespaces
+      label:
+        text: labels.namespace
+      schema:
+        $ref: schema#/properties/metadata/properties/release/properties/namespace
+      type: select
+    - fetch: getMongoDbVersions|catalog.kubedb.com|v1alpha1|mongodbversions
+      label:
+        text: labels.database.version
+      schema:
+        $ref: schema#/properties/resources/properties/kubedbComMongoDB/properties/spec/properties/version
+      type: select
+    - individualItemDisabilityCheck: disableLableChecker
+      isArray: true
+      keys:
+        label:
+          text: labels.labels.key
+      label:
+        text: labels.labels.label
+      schema:
+        $ref: schema#/properties/resources/properties/appApplication/properties/metadata/properties/labels
+      type: key-value-input-form
+      values:
+        label:
+          text: labels.labels.value
+        schema:
+          $ref: schema#/properties/resources/properties/appApplication/properties/metadata/properties/labels/additionalProperties
+        type: input
+    - isArray: true
+      keys:
+        label:
+          text: labels.annotations.key
+      label:
+        text: labels.annotations.label
+      schema:
+        $ref: schema#/properties/resources/properties/appApplication/properties/metadata/properties/annotations
+      type: key-value-input-form
+      values:
+        label:
+          text: labels.annotations.value
+        schema:
+          $ref: schema#/properties/resources/properties/appApplication/properties/metadata/properties/annotations/additionalProperties
+        type: input
+    - hasDescription: true
+      label:
+        text: labels.terminationPolicy
+      options:
+      - description: options.terminationPolicy.delete.description
+        text: options.terminationPolicy.delete.label
+        value: Delete
+      - description: options.terminationPolicy.halt.description
+        text: options.terminationPolicy.halt.label
+        value: Halt
+      - description: options.terminationPolicy.wipeOut.description
+        text: options.terminationPolicy.wipeOut.label
+        value: WipeOut
+      - description: options.terminationPolicy.doNotTerminate.description
+        text: options.terminationPolicy.doNotTerminate.label
+        value: DoNotTerminate
+      schema:
+        $ref: schema#/properties/resources/properties/kubedbComMongoDB/properties/spec/properties/terminationPolicy
+      type: radio
+    - elements:
+      - label:
+          hasLine: true
+          text: labels.database.secret
+        type: label-element
+      - fetch: getSecrets
+        if: hasExistingSecret
+        label:
+          text: labels.secret
+        schema:
+          $ref: schema#/properties/resources/properties/kubedbComMongoDB/properties/spec/properties/authSecret/properties/name
+        type: select
+      - if: hasNoExistingSecret
+        label:
+          text: labels.secret
+        schema:
+          $ref: schema#/properties/resources/properties/kubedbComMongoDB/properties/spec/properties/authSecret/properties/name
+        type: input
+      if: showAuthSecretField
+      type: single-step-form
+    - if: showAuthPasswordField
+      label:
+        text: labels.database.secret
+      schema:
+        $ref: schema#/properties/resources/properties/secretAuth/properties/metadata/properties/name
+      type: input
+    - elements:
+      - label:
+          hasLine: true
+          text: labels.new_secret_password
+        type: label-element
+      - if: showNewSecretCreateField
+        label:
+          text: labels.password
+        schema:
+          $ref: schema#/properties/resources/properties/secretAuth/properties/data/properties/password
+        type: input
+      if: showNewSecretCreateField
+      schema:
+        $ref: schema#/properties/resources/properties/secretAuth/properties/data
+      type: single-step-form
+    type: single-step-form
+  id: basic
+  title: steps.0.label
+type: multi-step-form
