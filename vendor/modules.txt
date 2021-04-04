@@ -1,9 +1,24 @@
+# github.com/PuerkitoBio/purell v1.1.1
+github.com/PuerkitoBio/purell
+# github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578
+github.com/PuerkitoBio/urlesc
+# github.com/go-openapi/jsonpointer v0.19.3 => github.com/go-openapi/jsonpointer v0.19.3
+github.com/go-openapi/jsonpointer
+# github.com/go-openapi/jsonreference v0.19.3 => github.com/go-openapi/jsonreference v0.19.3
+## explicit
+github.com/go-openapi/jsonreference
+# github.com/go-openapi/swag v0.19.5 => github.com/go-openapi/swag v0.19.5
+github.com/go-openapi/swag
 # github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b
 github.com/golang/glog
 # github.com/inconshreveable/mousetrap v1.0.0
 github.com/inconshreveable/mousetrap
 # github.com/kr/pretty v0.2.1
 ## explicit
+# github.com/mailru/easyjson v0.7.0
+github.com/mailru/easyjson/buffer
+github.com/mailru/easyjson/jlexer
+github.com/mailru/easyjson/jwriter
 # github.com/onsi/ginkgo v1.15.0
 ## explicit
 # github.com/onsi/gomega v1.10.5
@@ -24,10 +39,20 @@ github.com/yudai/gojsondiff
 github.com/yudai/gojsondiff/formatter
 # github.com/yudai/golcs v0.0.0-20170316035057-ecda9a501e82
 github.com/yudai/golcs
+# golang.org/x/net v0.0.0-20201202161906-c7110b5ffcbb
+golang.org/x/net/idna
 # golang.org/x/sys v0.0.0-20210119212857-b64e53b001e4
 ## explicit
 # golang.org/x/text v0.3.4
 ## explicit
+golang.org/x/text/secure/bidirule
+golang.org/x/text/transform
+golang.org/x/text/unicode/bidi
+golang.org/x/text/unicode/norm
+golang.org/x/text/width
+# gomodules.xyz/errors v0.0.0-20201104190405-077f059979fd
+## explicit
+gomodules.xyz/errors
 # gopkg.in/yaml.v2 v2.4.0
 ## explicit
 gopkg.in/yaml.v2

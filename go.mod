@@ -3,6 +3,7 @@ module kmodules.xyz/uibuilder-schema-checker
 go 1.16
 
 require (
+	github.com/go-openapi/jsonreference v0.19.3
 	github.com/kr/pretty v0.2.1 // indirect
 	github.com/onsi/ginkgo v1.15.0 // indirect
 	github.com/onsi/gomega v1.10.5 // indirect
@@ -12,6 +13,7 @@ require (
 	github.com/yudai/gojsondiff v1.0.0
 	golang.org/x/sys v0.0.0-20210119212857-b64e53b001e4 // indirect
 	golang.org/x/text v0.3.4 // indirect
+	gomodules.xyz/errors v0.0.0-20201104190405-077f059979fd
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	k8s.io/apimachinery v0.18.9
 	kmodules.xyz/client-go v0.0.0-20210315112949-a05d2cc96f28

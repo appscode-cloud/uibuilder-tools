@@ -22,9 +22,11 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"strings"
 
 	"kmodules.xyz/client-go/logs"
 
+	"github.com/go-openapi/jsonreference"
 	"github.com/spf13/cobra"
 	diff "github.com/yudai/gojsondiff"
 	"github.com/yudai/gojsondiff/formatter"
@@ -33,7 +35,8 @@ import (
 )
 
 var (
-	filename string = "./u1.json"
+	uiFile     = "/home/tamal/go/src/go.bytebuilders.dev/ui-wizards/charts/kubedbcom-mongodb-editor/ui/create-ui.yaml"
+	schemaFile = "/home/tamal/go/src/go.bytebuilders.dev/ui-wizards/charts/kubedbcom-mongodb-editor/values.openapiv3_schema.yaml"
 )
 
 func main() {
@@ -41,23 +44,89 @@ func main() {
 		Use:   "uibuilder-schema-checker",
 		Short: "Check schema of ui-builder json",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			result, err := check(filename)
+			result, err := checkUIBuilderSchema(uiFile)
 			if err != nil {
 				return err
 			}
-			fmt.Println(result)
-			return nil
+			if result != "" {
+				return fmt.Errorf("ui json file does not conform to ui-builder schema. diff\n %v", result)
+			}
+			return checkJsonReference()
 		},
 	}
 	flags := rootCmd.Flags()
 	flags.AddGoFlagSet(flag.CommandLine)
-	flags.StringVar(&filename, "content", filename, "Path to directory where markdown files reside")
+	flags.StringVar(&uiFile, "ui-file", uiFile, "Path to ui.json file")
+	flags.StringVar(&schemaFile, "schema-file", schemaFile, "Path to schema file")
 
 	logs.ParseFlags()
 	utilruntime.Must(rootCmd.Execute())
 }
 
-func check(filename string) (string, error) {
+func checkJsonReference() error {
+	data, err := ioutil.ReadFile(uiFile)
+	if err != nil {
+		return err
+	}
+	var uijson map[string]interface{}
+	err = yaml.Unmarshal(data, &uijson)
+	if err != nil {
+		return err
+	}
+
+	data, err = ioutil.ReadFile(schemaFile)
+	if err != nil {
+		return err
+	}
+	var schema map[string]interface{}
+	err = yaml.Unmarshal(data, &schema)
+	if err != nil {
+		return err
+	}
+
+	errlist := checkRef(uijson, schema, "")
+	for _, e := range errlist {
+		_, _ = fmt.Fprintln(os.Stderr, e, "\n")
+	}
+	if len(errlist) > 0 {
+		return fmt.Errorf("schema ref check failed")
+	}
+	return nil
+}
+
+func checkRef(uijson, schema map[string]interface{}, path string) (errlist []error) {
+	for k, v := range uijson {
+		switch u := v.(type) {
+		case map[string]interface{}:
+			errlist = append(errlist, checkRef(u, schema, path+k+".")...)
+		case []interface{}:
+			for i := range u {
+				entry, ok := u[i].(map[string]interface{})
+				if !ok {
+					continue
+				}
+				errlist = append(errlist, checkRef(entry, schema, fmt.Sprintf("%s%s[%d].", path, k, i))...)
+			}
+		case string:
+			if k == "$ref" && strings.HasPrefix(u, "schema#/") {
+				curPath := path + k + "."
+				p, err := jsonreference.New(u)
+				if err != nil {
+					errlist = append(errlist, fmt.Errorf("failed to parse schema.ref %s at path %s: %v", u, curPath, err))
+					break
+				}
+				_, _, err = p.GetPointer().Get(schema)
+				if err != nil {
+					errlist = append(errlist, fmt.Errorf("schema.ref %s at path %s is invalid: %v", u, curPath, err))
+					break
+				}
+			}
+		}
+	}
+	return
+}
+
+func checkUIBuilderSchema(filename string) (string, error) {
 	data, err := ioutil.ReadFile(filename)
 	if err != nil {
 		return "", err
