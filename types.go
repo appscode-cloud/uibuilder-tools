@@ -196,6 +196,32 @@ func (u *UnionOptions) UnmarshalJSON(data []byte) error {
 	return json.Unmarshal(data, &u.A)
 }
 
+type StringBool struct {
+	A string
+	B bool
+}
+
+func (u StringBool) MarshalJSON() ([]byte, error) {
+	if u.A != "" {
+		return json.Marshal(u.A)
+	}
+	return json.Marshal(u.B)
+}
+
+func (u *StringBool) UnmarshalJSON(data []byte) error {
+	var v interface{}
+	err := json.Unmarshal(data, &v)
+	if err != nil {
+		return err
+	}
+	if val, ok := v.(bool); ok {
+		u.B = val
+	} else {
+		u.A = fmt.Sprintf("%v", v)
+	}
+	return nil
+}
+
 /*
 {
   "label": {
@@ -225,17 +251,17 @@ type LabelElement struct {
    }
 */
 type InputElement struct {
-	If          string    `json:"if,omitempty"`
-	CustomClass string    `json:"customClass,omitempty"`
-	OnChange    string    `json:"onChange,omitempty"`
-	Computed    string    `json:"computed,omitempty"`
-	Decoder     string    `json:"decoder,omitempty"`
-	Encoder     string    `json:"encoder,omitempty"`
-	Disabled    string    `json:"disabled,omitempty"`
-	HideValue   bool      `json:"hideValue,omitempty"`
-	Label       *Label    `json:"label,omitempty"`
-	Type        string    `json:"type"`
-	Schema      SchemaRef `json:"schema"`
+	If          string      `json:"if,omitempty"`
+	CustomClass string      `json:"customClass,omitempty"`
+	OnChange    string      `json:"onChange,omitempty"`
+	Computed    string      `json:"computed,omitempty"`
+	Decoder     string      `json:"decoder,omitempty"`
+	Encoder     string      `json:"encoder,omitempty"`
+	Disabled    *StringBool `json:"disabled,omitempty"`
+	HideValue   bool        `json:"hideValue,omitempty"`
+	Label       *Label      `json:"label,omitempty"`
+	Type        string      `json:"type"`
+	Schema      SchemaRef   `json:"schema"`
 }
 
 /*
@@ -273,13 +299,15 @@ type InputElement struct {
 }
 */
 type RadioElement struct {
-	Label          *Label        `json:"label,omitempty"`
-	Computed       string        `json:"computed,omitempty"`
-	Onchange       string        `json:"onChange,omitempty"`
-	Type           string        `json:"type"`
-	Schema         SchemaRef     `json:"schema"`
-	HasDescription bool          `json:"hasDescription,omitempty"`
-	Options        *UnionOptions `json:"options,omitempty"`
+	If                            string        `json:"if,omitempty"`
+	Label                         *Label        `json:"label,omitempty"`
+	Computed                      string        `json:"computed,omitempty"`
+	Onchange                      string        `json:"onChange,omitempty"`
+	Type                          string        `json:"type"`
+	Schema                        SchemaRef     `json:"schema"`
+	HasDescription                bool          `json:"hasDescription,omitempty"`
+	Options                       *UnionOptions `json:"options,omitempty"`
+	Individualitemdisabilitycheck string        `json:"individualItemDisabilityCheck,omitempty"`
 }
 
 /*
@@ -302,7 +330,7 @@ type SelectElement struct {
 	OnChange string        `json:"onChange,omitempty"`
 	Type     string        `json:"type"`
 	Schema   SchemaRef     `json:"schema"`
-	Disabled string        `json:"disabled,omitempty"`
+	Disabled *StringBool   `json:"disabled,omitempty"`
 	Options  *UnionOptions `json:"options,omitempty"`
 }
 
@@ -358,6 +386,7 @@ type KeyValueInputForm struct {
    }
 */
 type SwitchElement struct {
+	If       string    `json:"if,omitempty"`
 	Type     string    `json:"type"`
 	Label    *Label    `json:"label,omitempty"`
 	Schema   SchemaRef `json:"schema"`
@@ -420,6 +449,7 @@ type TableContentEntry struct {
 }
 
 type SingleStepFormArray struct {
+	If            string              `json:"if,omitempty"`
 	Type          string              `json:"type"`
 	Label         *Label              `json:"label,omitempty"`
 	AddFormLabel  string              `json:"addFormLabel,omitempty"`
@@ -489,9 +519,9 @@ type Label struct {
 }
 
 type RadioElementOption struct {
-	Value       string `json:"value,omitempty"`
-	Text        string `json:"text,omitempty"`
-	Description string `json:"description,omitempty"`
+	Value       StringBool `json:"value,omitempty"`
+	Text        string     `json:"text,omitempty"`
+	Description string     `json:"description,omitempty"`
 }
 
 type KVInputFormKeys struct {
@@ -507,7 +537,7 @@ type KVInputFormValues struct {
 type Discriminator struct {
 	Type                 string                `json:"type,omitempty"`
 	AdditionalProperties *AdditionalProperties `json:"additionalProperties,omitempty"`
-	Default              string                `json:"default,omitempty"`
+	Default              *StringBool           `json:"default,omitempty"`
 }
 
 type AdditionalProperties struct {

@@ -37,9 +37,11 @@ import (
 )
 
 var (
-	wizardDir  = filepath.Join(homedir.HomeDir(), "go/src/go.bytebuilders.dev/ui-wizards/charts")
-	uiFile     = filepath.Join(homedir.HomeDir(), "go/src/go.bytebuilders.dev/ui-wizards/charts/kubedbcom-mongodb-editor/ui/create-ui.yaml")
-	schemaFile = filepath.Join(homedir.HomeDir(), "go/src/go.bytebuilders.dev/ui-wizards/charts/kubedbcom-mongodb-editor/values.openapiv3_schema.yaml")
+	wizardDir               = filepath.Join(homedir.HomeDir(), "go/src/go.bytebuilders.dev/ui-wizards/charts")
+	uiFile                  = filepath.Join(homedir.HomeDir(), "go/src/go.bytebuilders.dev/ui-wizards/charts/kubedbcom-mongodb-editor/ui/create-ui.yaml")
+	schemaFile              = filepath.Join(homedir.HomeDir(), "go/src/go.bytebuilders.dev/ui-wizards/charts/kubedbcom-mongodb-editor/values.openapiv3_schema.yaml")
+	fmtOnly                 bool
+	skipSchemaRefValidation bool
 )
 
 func main() {
@@ -48,6 +50,10 @@ func main() {
 		Short: "Check schema of ui-builder json",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if wizardDir == "" {
+				err := formatSchema(uiFile)
+				if err != nil || fmtOnly {
+					return err
+				}
 				return checkFile(uiFile, schemaFile)
 			}
 			return checkDir(wizardDir)
@@ -58,6 +64,8 @@ func main() {
 	flags.StringVar(&wizardDir, "wizard-dir", wizardDir, "Path to wizard directory")
 	flags.StringVar(&uiFile, "ui-file", uiFile, "Path to ui.json file")
 	flags.StringVar(&schemaFile, "schema-file", schemaFile, "Path to schema file")
+	flags.BoolVar(&fmtOnly, "fmt-only", fmtOnly, "Format ui.json file only")
+	flags.BoolVar(&skipSchemaRefValidation, "skip-schema-ref-validation", skipSchemaRefValidation, "Skip schema ref validation")
 
 	logs.ParseFlags()
 	utilruntime.Must(rootCmd.Execute())
@@ -81,9 +89,15 @@ func checkDir(root string) error {
 				continue
 			}
 			fp := filepath.Join(dir, "ui", f.Name())
-			fmt.Printf("processing file: %s", fp)
-			if err = checkFile(fp, path); err != nil {
+			fmt.Printf("processing file: %s\n", fp)
+			err := formatSchema(fp)
+			if err != nil {
 				return err
+			}
+			if !fmtOnly {
+				if err = checkFile(fp, path); err != nil {
+					return err
+				}
 			}
 		}
 	}
@@ -97,6 +111,9 @@ func checkFile(uiFile, schemaFile string) error {
 	}
 	if result != "" {
 		return fmt.Errorf("ui json file does not conform to ui-builder schema. diff\n %v", result)
+	}
+	if skipSchemaRefValidation {
+		return nil
 	}
 	return checkJsonReference(uiFile, schemaFile)
 }
@@ -164,6 +181,26 @@ func checkRef(uijson, schema map[string]interface{}, path string) (errlist []err
 	return
 }
 
+func formatSchema(filename string) error {
+	data, err := ioutil.ReadFile(filename)
+	if err != nil {
+		return err
+	}
+
+	var original map[string]interface{}
+	err = yaml.Unmarshal(data, &original)
+	if err != nil {
+		return err
+	}
+
+	// fix formatting of the input ui.json file
+	fmtyml, err := yaml.Marshal(original)
+	if err != nil {
+		return err
+	}
+	return ioutil.WriteFile(filename, fmtyml, 0644)
+}
+
 func checkUIBuilderSchema(filename string) (string, error) {
 	data, err := ioutil.ReadFile(filename)
 	if err != nil {
@@ -176,16 +213,6 @@ func checkUIBuilderSchema(filename string) (string, error) {
 		return "", err
 	}
 	sorted, err := json.MarshalIndent(&original, "", "  ")
-	if err != nil {
-		return "", err
-	}
-
-	// fix formatting of the input ui.json file
-	fmtyml, err := yaml.Marshal(original)
-	if err != nil {
-		return "", err
-	}
-	err = ioutil.WriteFile(filename, fmtyml, 0644)
 	if err != nil {
 		return "", err
 	}
