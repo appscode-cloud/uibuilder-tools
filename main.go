@@ -22,6 +22,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"kmodules.xyz/client-go/logs"
@@ -30,13 +31,15 @@ import (
 	"github.com/spf13/cobra"
 	diff "github.com/yudai/gojsondiff"
 	"github.com/yudai/gojsondiff/formatter"
+	"gomodules.xyz/homedir"
 	utilruntime "k8s.io/apimachinery/pkg/util/runtime"
 	"sigs.k8s.io/yaml"
 )
 
 var (
-	uiFile     = "/home/tamal/go/src/go.bytebuilders.dev/ui-wizards/charts/kubedbcom-mongodb-editor/ui/create-ui.yaml"
-	schemaFile = "/home/tamal/go/src/go.bytebuilders.dev/ui-wizards/charts/kubedbcom-mongodb-editor/values.openapiv3_schema.yaml"
+	wizardDir  = filepath.Join(homedir.HomeDir(), "go/src/go.bytebuilders.dev/ui-wizards/charts")
+	uiFile     = filepath.Join(homedir.HomeDir(), "go/src/go.bytebuilders.dev/ui-wizards/charts/kubedbcom-mongodb-editor/ui/create-ui.yaml")
+	schemaFile = filepath.Join(homedir.HomeDir(), "go/src/go.bytebuilders.dev/ui-wizards/charts/kubedbcom-mongodb-editor/values.openapiv3_schema.yaml")
 )
 
 func main() {
@@ -44,18 +47,15 @@ func main() {
 		Use:   "uibuilder-schema-checker",
 		Short: "Check schema of ui-builder json",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			result, err := checkUIBuilderSchema(uiFile)
-			if err != nil {
-				return err
+			if wizardDir == "" {
+				return checkFile(uiFile, schemaFile)
 			}
-			if result != "" {
-				return fmt.Errorf("ui json file does not conform to ui-builder schema. diff\n %v", result)
-			}
-			return checkJsonReference()
+			return checkDir(wizardDir)
 		},
 	}
 	flags := rootCmd.Flags()
 	flags.AddGoFlagSet(flag.CommandLine)
+	flags.StringVar(&wizardDir, "wizard-dir", wizardDir, "Path to wizard directory")
 	flags.StringVar(&uiFile, "ui-file", uiFile, "Path to ui.json file")
 	flags.StringVar(&schemaFile, "schema-file", schemaFile, "Path to schema file")
 
@@ -63,7 +63,45 @@ func main() {
 	utilruntime.Must(rootCmd.Execute())
 }
 
-func checkJsonReference() error {
+func checkDir(root string) error {
+	matches, err := filepath.Glob(filepath.Join(root, "**", "values.openapiv3_schema.yaml"))
+	if err != nil {
+		return err
+	}
+	for _, path := range matches {
+		dir := filepath.Dir(path)
+		uifiles, err := ioutil.ReadDir(filepath.Join(dir, "ui"))
+		if os.IsNotExist(err) {
+			continue
+		} else if err != nil {
+			return err
+		}
+		for _, f := range uifiles {
+			if f.IsDir() || f.Name() == "functions.js" || f.Name() == "language.yaml" {
+				continue
+			}
+			fp := filepath.Join(dir, "ui", f.Name())
+			fmt.Printf("processing file: %s", fp)
+			if err = checkFile(fp, path); err != nil {
+				return err
+			}
+		}
+	}
+	return nil
+}
+
+func checkFile(uiFile, schemaFile string) error {
+	result, err := checkUIBuilderSchema(uiFile)
+	if err != nil {
+		return err
+	}
+	if result != "" {
+		return fmt.Errorf("ui json file does not conform to ui-builder schema. diff\n %v", result)
+	}
+	return checkJsonReference(uiFile, schemaFile)
+}
+
+func checkJsonReference(uiFile, schemaFile string) error {
 	data, err := ioutil.ReadFile(uiFile)
 	if err != nil {
 		return err
@@ -86,7 +124,7 @@ func checkJsonReference() error {
 
 	errlist := checkRef(uijson, schema, "")
 	for _, e := range errlist {
-		_, _ = fmt.Fprintln(os.Stderr, e, "\n")
+		_, _ = fmt.Fprintln(os.Stderr, e)
 	}
 	if len(errlist) > 0 {
 		return fmt.Errorf("schema ref check failed")
