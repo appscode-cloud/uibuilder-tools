@@ -23,6 +23,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 
 	"kmodules.xyz/client-go/logs"
@@ -140,10 +141,14 @@ func checkJsonReference(uiFile, schemaFile string) error {
 	}
 
 	errlist := checkRef(uijson, schema, "")
+	errno := 0
 	for _, e := range errlist {
-		_, _ = fmt.Fprintln(os.Stderr, e)
+		if e != nil {
+			_, _ = fmt.Fprintln(os.Stderr, e)
+			errno++
+		}
 	}
-	if len(errlist) > 0 {
+	if errno > 0 {
 		return fmt.Errorf("schema ref check failed")
 	}
 	return nil
@@ -165,20 +170,48 @@ func checkRef(uijson, schema map[string]interface{}, path string) (errlist []err
 		case string:
 			if k == "$ref" && strings.HasPrefix(u, "schema#/") {
 				curPath := path + k + "."
-				p, err := jsonreference.New(u)
-				if err != nil {
-					errlist = append(errlist, fmt.Errorf("failed to parse schema.ref %s at path %s: %v", u, curPath, err))
-					break
-				}
-				_, _, err = p.GetPointer().Get(schema)
-				if err != nil {
-					errlist = append(errlist, fmt.Errorf("schema.ref %s at path %s is invalid: %v", u, curPath, err))
-					break
-				}
+				errlist = append(errlist, r1(u, schema, curPath))
 			}
 		}
 	}
 	return
+}
+
+var re = regexp.MustCompile(`/properties/\d+(/?)`)
+
+func r1(ref string, schema map[string]interface{}, curPath string) error {
+	u := re.ReplaceAllString(ref, "/items${1}")
+	p, err := jsonreference.New(u)
+	if err != nil {
+		return fmt.Errorf("failed to parse schema.ref %s at path %s: %v", u, curPath, err)
+	}
+	_, _, err = p.GetPointer().Get(schema)
+	if err == nil {
+		return nil
+	}
+
+	parts := strings.Split(u, "/")
+	if len(parts) >= 3 && parts[len(parts)-2] == "properties" {
+		nu := strings.Join(parts[:len(parts)-2], "/")
+
+		p, err := jsonreference.New(nu)
+		if err != nil {
+			return fmt.Errorf("failed to parse schema.ref %s at path %s: %v", ref, curPath, err)
+		}
+		v, _, err := p.GetPointer().Get(schema)
+		if err != nil {
+			return fmt.Errorf("schema.ref %s at path %s is invalid: %v", ref, curPath, err)
+		}
+		if m, ok := v.(map[string]interface{}); !ok {
+			return fmt.Errorf("expected schema.ref %s at path %s to point to an object", nu, curPath)
+		} else if _, o2 := m["additionalProperties"]; !o2 {
+			return fmt.Errorf("schema.ref %s at path %s is missing additionalProperties", ref, curPath)
+		} else {
+			return nil
+		}
+	}
+
+	return fmt.Errorf("schema.ref %s at path %s is invalid: %v", u, curPath, err)
 }
 
 func formatSchema(filename string) error {
