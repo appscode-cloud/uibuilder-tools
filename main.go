@@ -32,15 +32,18 @@ import (
 	"github.com/spf13/cobra"
 	diff "github.com/yudai/gojsondiff"
 	"github.com/yudai/gojsondiff/formatter"
-	"gomodules.xyz/homedir"
 	utilruntime "k8s.io/apimachinery/pkg/util/runtime"
 	"sigs.k8s.io/yaml"
 )
 
 var (
-	wizardDir               = filepath.Join(homedir.HomeDir(), "go/src/go.bytebuilders.dev/ui-wizards/charts")
-	uiFile                  = filepath.Join(homedir.HomeDir(), "go/src/go.bytebuilders.dev/ui-wizards/charts/kubedbcom-mongodb-editor/ui/create-ui.yaml")
-	schemaFile              = filepath.Join(homedir.HomeDir(), "go/src/go.bytebuilders.dev/ui-wizards/charts/kubedbcom-mongodb-editor/values.openapiv3_schema.yaml")
+	// wizardDir               = filepath.Join(homedir.HomeDir(), "go/src/go.bytebuilders.dev/ui-wizards/charts")
+	// uiFile                  = filepath.Join(homedir.HomeDir(), "go/src/go.bytebuilders.dev/ui-wizards/charts/kubedbcom-mongodb-editor/ui/create-ui.yaml")
+	// schemaFile              = filepath.Join(homedir.HomeDir(), "go/src/go.bytebuilders.dev/ui-wizards/charts/kubedbcom-mongodb-editor/values.openapiv3_schema.yaml")
+
+	wizardDir               = ""
+	uiFile                  = ""
+	schemaFile              = ""
 	fmtOnly                 bool
 	skipSchemaRefValidation bool
 )

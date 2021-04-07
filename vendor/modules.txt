@@ -50,9 +50,6 @@ golang.org/x/text/transform
 golang.org/x/text/unicode/bidi
 golang.org/x/text/unicode/norm
 golang.org/x/text/width
-# gomodules.xyz/homedir v0.0.0-20201104190528-bcd4d5d94b84
-## explicit
-gomodules.xyz/homedir
 # gopkg.in/yaml.v2 v2.4.0
 ## explicit
 gopkg.in/yaml.v2

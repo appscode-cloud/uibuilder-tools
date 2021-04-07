@@ -13,7 +13,6 @@ require (
 	github.com/yudai/gojsondiff v1.0.0
 	golang.org/x/sys v0.0.0-20210119212857-b64e53b001e4 // indirect
 	golang.org/x/text v0.3.4 // indirect
-	gomodules.xyz/homedir v0.0.0-20201104190528-bcd4d5d94b84
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	k8s.io/apimachinery v0.18.9
 	kmodules.xyz/client-go v0.0.0-20210315112949-a05d2cc96f28
