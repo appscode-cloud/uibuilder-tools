@@ -550,7 +550,6 @@ type ConfigureOptionsElement struct {
 	HasDescription  bool           `json:"hasDescription"`
 	Options         []EditorOption `json:"options"`
 	Owner           OwnerRef       `json:"owner"`
-	Schema          SchemaRef      `json:"schema"`
 	Type            string         `json:"type"`
 }
 
