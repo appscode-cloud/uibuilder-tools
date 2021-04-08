@@ -175,6 +175,60 @@ func (u *UnionElement) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+type UnionFormElement struct {
+	*SingleStepForm
+	*MultiStepForm
+}
+
+func (u UnionFormElement) MarshalJSON() ([]byte, error) {
+	switch {
+	case u.SingleStepForm != nil:
+		return json.Marshal(u.SingleStepForm)
+	case u.MultiStepForm != nil:
+		return json.Marshal(u.MultiStepForm)
+	}
+	return nil, nil
+}
+
+func (u *UnionFormElement) UnmarshalJSON(data []byte) error {
+	type TypedElement struct {
+		Type string `json:"type"`
+	}
+
+	var t TypedElement
+	err := json.Unmarshal(data, &t)
+	if err != nil {
+		return err
+	}
+	if t.Type == "" {
+		return fmt.Errorf("failed to detect type: %s", string(data))
+	}
+
+	if u == nil {
+		u = new(UnionFormElement)
+	}
+
+	switch t.Type {
+	case "single-step-form":
+		var e SingleStepForm
+		err = json.Unmarshal(data, &e)
+		if err != nil {
+			return err
+		}
+		u.SingleStepForm = &e
+	case "multi-step-form":
+		var e MultiStepForm
+		err = json.Unmarshal(data, &e)
+		if err != nil {
+			return err
+		}
+		u.MultiStepForm = &e
+	default:
+		return fmt.Errorf("unknown element type %s", t.Type)
+	}
+	return nil
+}
+
 type UnionOptions struct {
 	A []string
 	B []RadioElementOption
@@ -503,9 +557,9 @@ type MultiStepForm struct {
 }
 
 type MultiStepFormStep struct {
-	ID    string         `json:"id,omitempty"`
-	Title string         `json:"title"`
-	Form  SingleStepForm `json:"form"`
+	ID    string           `json:"id,omitempty"`
+	Title string           `json:"title"`
+	Form  UnionFormElement `json:"form"`
 }
 
 type SchemaRef struct {
