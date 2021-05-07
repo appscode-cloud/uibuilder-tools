@@ -34,6 +34,8 @@ type UnionElement struct {
 	*ConfigureOptionsElement
 	*MultiselectElement
 	*KeyTextAreaInputFormElement
+	*ReusableElement
+	*Editor
 }
 
 func (u UnionElement) MarshalJSON() ([]byte, error) {
@@ -62,6 +64,10 @@ func (u UnionElement) MarshalJSON() ([]byte, error) {
 		return json.Marshal(u.MultiselectElement)
 	case u.KeyTextAreaInputFormElement != nil:
 		return json.Marshal(u.KeyTextAreaInputFormElement)
+	case u.ReusableElement != nil:
+		return json.Marshal(u.ReusableElement)
+	case u.Editor != nil:
+		return json.Marshal(u.Editor)
 	}
 	return nil, nil
 }
@@ -169,6 +175,20 @@ func (u *UnionElement) UnmarshalJSON(data []byte) error {
 			return err
 		}
 		u.KeyTextAreaInputFormElement = &e
+	case "reusable-element":
+		var e ReusableElement
+		err = json.Unmarshal(data, &e)
+		if err != nil {
+			return err
+		}
+		u.ReusableElement = &e
+	case "editor":
+		var e Editor
+		err = json.Unmarshal(data, &e)
+		if err != nil {
+			return err
+		}
+		u.Editor = &e
 	default:
 		return fmt.Errorf("unknown element type %s", t.Type)
 	}
@@ -377,15 +397,16 @@ type RadioElement struct {
 }
 */
 type SelectElement struct {
-	If       string        `json:"if,omitempty"`
-	Label    *Label        `json:"label,omitempty"`
-	Fetch    string        `json:"fetch,omitempty"`
-	Computed string        `json:"computed,omitempty"`
-	OnChange string        `json:"onChange,omitempty"`
-	Type     string        `json:"type"`
-	Schema   SchemaRef     `json:"schema"`
-	Disabled *StringBool   `json:"disabled,omitempty"`
-	Options  *UnionOptions `json:"options,omitempty"`
+	If                     string        `json:"if,omitempty"`
+	Label                  *Label        `json:"label,omitempty"`
+	Fetch                  string        `json:"fetch,omitempty"`
+	Computed               string        `json:"computed,omitempty"`
+	OnChange               string        `json:"onChange,omitempty"`
+	Type                   string        `json:"type"`
+	Schema                 SchemaRef     `json:"schema"`
+	Disabled               *StringBool   `json:"disabled,omitempty"`
+	Options                *UnionOptions `json:"options,omitempty"`
+	AllowUserDefinedOption bool          `json:"allowUserDefinedOption"`
 }
 
 /*
@@ -683,4 +704,26 @@ type KeyTextAreaInputFormElement struct {
 	Schema  SchemaRef         `json:"schema"`
 	Type    string            `json:"type"`
 	Values  KVInputFormValues `json:"values"`
+}
+
+type ChartRef struct {
+	Name    string `json:"name"`
+	Version string `json:"version"`
+}
+
+type ReusableElement struct {
+	Alias          string    `json:"alias"`
+	Chart          ChartRef  `json:"chart"`
+	ModuleResolver string    `json:"moduleResolver"`
+	Schema         SchemaRef `json:"schema"`
+	Type           string    `json:"type"`
+}
+
+type Editor struct {
+	Computed string    `json:"computed"`
+	If       string    `json:"if"`
+	Label    *Label    `json:"label"`
+	OnChange string    `json:"onChange"`
+	Schema   SchemaRef `json:"schema"`
+	Type     string    `json:"type"`
 }
