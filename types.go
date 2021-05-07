@@ -336,6 +336,7 @@ type InputElement struct {
 	Label       *Label      `json:"label,omitempty"`
 	Type        string      `json:"type"`
 	Schema      SchemaRef   `json:"schema"`
+	Required    *StringBool `json:"required,omitempty"`
 }
 
 /*
@@ -408,6 +409,7 @@ type SelectElement struct {
 	Options                *UnionOptions `json:"options,omitempty"`
 	AllowUserDefinedOption bool          `json:"allowUserDefinedOption,omitempty"`
 	CustomClass            string        `json:"customClass,omitempty"`
+	Required               *StringBool   `json:"required,omitempty"`
 }
 
 /*
@@ -644,10 +646,11 @@ type OwnerRef struct {
 }
 
 type EditorOption struct {
-	Description  string                   `json:"description,omitempty"`
-	Text         string                   `json:"text"`
-	Value        string                   `json:"value"`
-	Dependencies []EditorOptionDependency `json:"dependencies,omitempty"`
+	Description    string                   `json:"description,omitempty"`
+	Text           string                   `json:"text"`
+	Value          string                   `json:"value"`
+	Dependencies   []EditorOptionDependency `json:"dependencies,omitempty"`
+	DependingSteps []string                 `json:"dependingSteps,omitempty"`
 }
 
 type EditorOptionDependency struct {
