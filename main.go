@@ -26,12 +26,11 @@ import (
 	"regexp"
 	"strings"
 
-	"gomodules.xyz/kglog"
-
 	"github.com/go-openapi/jsonreference"
 	"github.com/spf13/cobra"
 	diff "github.com/yudai/gojsondiff"
 	"github.com/yudai/gojsondiff/formatter"
+	"gomodules.xyz/kglog"
 	utilruntime "k8s.io/apimachinery/pkg/util/runtime"
 	"sigs.k8s.io/yaml"
 )
