@@ -406,7 +406,8 @@ type SelectElement struct {
 	Schema                 SchemaRef     `json:"schema"`
 	Disabled               *StringBool   `json:"disabled,omitempty"`
 	Options                *UnionOptions `json:"options,omitempty"`
-	AllowUserDefinedOption bool          `json:"allowUserDefinedOption"`
+	AllowUserDefinedOption bool          `json:"allowUserDefinedOption,omitempty"`
+	CustomClass            string        `json:"customClass,omitempty"`
 }
 
 /*
@@ -436,6 +437,7 @@ type SelectElement struct {
 }
 */
 type KeyValueInputForm struct {
+	If                            string            `json:"if,omitempty"`
 	IsArray                       bool              `json:"isArray,omitempty"`
 	OnChange                      string            `json:"onChange,omitempty"`
 	Computed                      string            `json:"computed,omitempty"`
@@ -461,12 +463,13 @@ type KeyValueInputForm struct {
    }
 */
 type SwitchElement struct {
-	If       string    `json:"if,omitempty"`
-	Type     string    `json:"type"`
-	Label    *Label    `json:"label,omitempty"`
-	Schema   SchemaRef `json:"schema"`
-	Computed string    `json:"computed,omitempty"`
-	Onchange string    `json:"onChange,omitempty"`
+	Disabled *StringBool `json:"disabled,omitempty"`
+	If       string      `json:"if,omitempty"`
+	Type     string      `json:"type"`
+	Label    *Label      `json:"label,omitempty"`
+	Schema   SchemaRef   `json:"schema"`
+	Computed string      `json:"computed,omitempty"`
+	Onchange string      `json:"onChange,omitempty"`
 }
 
 /*
@@ -498,6 +501,7 @@ type SwitchElement struct {
    }
 */
 type SingleStepForm struct {
+	Disabled      *StringBool              `json:"disabled,omitempty"`
 	Type          string                   `json:"type"`
 	Label         *Label                   `json:"label,omitempty"`
 	Schema        *SchemaRef               `json:"schema,omitempty"`
@@ -521,9 +525,11 @@ type TableContentEntry struct {
 	Path          string              `json:"path,omitempty"`
 	Label         *Label              `json:"label,omitempty"`
 	TableContents []TableContentEntry `json:"tableContents,omitempty"`
+	Required      bool                `json:"required,omitempty"`
 }
 
 type SingleStepFormArray struct {
+	Required      bool                `json:"required,omitempty"`
 	If            string              `json:"if,omitempty"`
 	Type          string              `json:"type"`
 	Label         *Label              `json:"label,omitempty"`
@@ -581,6 +587,7 @@ type MultiStepFormStep struct {
 	ID    string           `json:"id,omitempty"`
 	Title string           `json:"title"`
 	Form  UnionFormElement `json:"form"`
+	If    string           `json:"if,omitempty"`
 }
 
 type SchemaRef struct {
@@ -712,18 +719,20 @@ type ChartRef struct {
 }
 
 type ReusableElement struct {
-	Alias          string    `json:"alias"`
-	Chart          ChartRef  `json:"chart"`
-	ModuleResolver string    `json:"moduleResolver"`
-	Schema         SchemaRef `json:"schema"`
-	Type           string    `json:"type"`
+	Alias          string               `json:"alias"`
+	Chart          ChartRef             `json:"chart"`
+	DataContext    map[string]SchemaRef `json:"dataContext,omitempty"`
+	If             string               `json:"if,omitempty"`
+	ModuleResolver string               `json:"moduleResolver"`
+	Schema         SchemaRef            `json:"schema"`
+	Type           string               `json:"type"`
 }
 
 type Editor struct {
 	Computed string    `json:"computed"`
-	If       string    `json:"if"`
+	If       string    `json:"if,omitempty"`
 	Label    *Label    `json:"label"`
-	OnChange string    `json:"onChange"`
+	OnChange string    `json:"onChange,omitempty"`
 	Schema   SchemaRef `json:"schema"`
 	Type     string    `json:"type"`
 }
