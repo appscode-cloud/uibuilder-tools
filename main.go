@@ -26,7 +26,7 @@ import (
 	"regexp"
 	"strings"
 
-	"kmodules.xyz/client-go/logs"
+	"gomodules.xyz/kglog"
 
 	"github.com/go-openapi/jsonreference"
 	"github.com/spf13/cobra"
@@ -71,7 +71,7 @@ func main() {
 	flags.BoolVar(&fmtOnly, "fmt-only", fmtOnly, "Format ui.json file only")
 	flags.BoolVar(&skipSchemaRefValidation, "skip-schema-ref-validation", skipSchemaRefValidation, "Skip schema ref validation")
 
-	logs.ParseFlags()
+	kglog.ParseFlags()
 	utilruntime.Must(rootCmd.Execute())
 }
 
