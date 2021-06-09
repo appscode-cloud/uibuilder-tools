@@ -512,6 +512,7 @@ type SingleStepForm struct {
 	Elements      []UnionElement           `json:"elements,omitempty"`
 	Element       *SingleStepFormElement   `json:"element,omitempty"`
 	CustomClass   string                   `json:"customClass,omitempty"`
+	ShowLabel     bool                     `json:"show_label"`
 }
 
 type SingleStepFormElement struct {
@@ -724,6 +725,7 @@ type ChartRef struct {
 type ReusableElement struct {
 	Alias          string               `json:"alias"`
 	Chart          ChartRef             `json:"chart"`
+	Label          *Label               `json:"label,omitempty"`
 	DataContext    map[string]SchemaRef `json:"dataContext,omitempty"`
 	If             string               `json:"if,omitempty"`
 	ModuleResolver string               `json:"moduleResolver"`
