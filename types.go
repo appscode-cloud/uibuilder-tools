@@ -512,7 +512,7 @@ type SingleStepForm struct {
 	Elements      []UnionElement           `json:"elements,omitempty"`
 	Element       *SingleStepFormElement   `json:"element,omitempty"`
 	CustomClass   string                   `json:"customClass,omitempty"`
-	ShowLabel     bool                     `json:"show_label"`
+	ShowLabel     bool                     `json:"show_label,omitempty"`
 }
 
 type SingleStepFormElement struct {
