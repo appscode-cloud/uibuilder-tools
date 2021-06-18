@@ -18,7 +18,6 @@ package main
 
 import (
 	"encoding/json"
-	"flag"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -30,7 +29,7 @@ import (
 	"github.com/spf13/cobra"
 	diff "github.com/yudai/gojsondiff"
 	"github.com/yudai/gojsondiff/formatter"
-	"gomodules.xyz/kglog"
+	"gomodules.xyz/logs"
 	utilruntime "k8s.io/apimachinery/pkg/util/runtime"
 	"sigs.k8s.io/yaml"
 )
@@ -63,14 +62,13 @@ func main() {
 		},
 	}
 	flags := rootCmd.Flags()
-	flags.AddGoFlagSet(flag.CommandLine)
 	flags.StringVar(&wizardDir, "wizard-dir", wizardDir, "Path to wizard directory")
 	flags.StringVar(&uiFile, "ui-file", uiFile, "Path to ui.json file")
 	flags.StringVar(&schemaFile, "schema-file", schemaFile, "Path to schema file")
 	flags.BoolVar(&fmtOnly, "fmt-only", fmtOnly, "Format ui.json file only")
 	flags.BoolVar(&skipSchemaRefValidation, "skip-schema-ref-validation", skipSchemaRefValidation, "Skip schema ref validation")
 
-	kglog.ParseFlags()
+	logs.Init(rootCmd, true)
 	utilruntime.Must(rootCmd.Execute())
 }
 
