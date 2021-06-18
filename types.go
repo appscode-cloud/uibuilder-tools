@@ -731,6 +731,7 @@ type ReusableElement struct {
 	ModuleResolver string               `json:"moduleResolver"`
 	Schema         SchemaRef            `json:"schema"`
 	Type           string               `json:"type"`
+	ShowLabel      bool                 `json:"show_label,omitempty"`
 }
 
 type Editor struct {
