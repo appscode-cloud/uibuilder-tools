@@ -24,6 +24,7 @@ import (
 type UnionElement struct {
 	*LabelElement
 	*InputElement
+	*TextareaElement
 	*RadioElement
 	*SelectElement
 	*KeyValueInputForm
@@ -44,6 +45,8 @@ func (u UnionElement) MarshalJSON() ([]byte, error) {
 		return json.Marshal(u.LabelElement)
 	case u.InputElement != nil:
 		return json.Marshal(u.InputElement)
+	case u.TextareaElement != nil:
+		return json.Marshal(u.TextareaElement)
 	case u.RadioElement != nil:
 		return json.Marshal(u.RadioElement)
 	case u.SelectElement != nil:
@@ -105,6 +108,13 @@ func (u *UnionElement) UnmarshalJSON(data []byte) error {
 			return err
 		}
 		u.InputElement = &e
+	case "textarea":
+		var e TextareaElement
+		err = json.Unmarshal(data, &e)
+		if err != nil {
+			return err
+		}
+		u.TextareaElement = &e
 	case "radio":
 		var e RadioElement
 		err = json.Unmarshal(data, &e)
@@ -337,6 +347,23 @@ type InputElement struct {
 	Type        string      `json:"type"`
 	Schema      SchemaRef   `json:"schema"`
 	Required    *StringBool `json:"required,omitempty"`
+}
+
+/*
+{
+  "label": {
+    "text": "labels.description"
+  },
+  "schema": {
+    "$ref": "discriminator#/properties/users/items/properties/description"
+  },
+  "type": "textarea"
+}
+*/
+type TextareaElement struct {
+	If     string    `json:"if,omitempty"`
+	Type   string    `json:"type"`
+	Schema SchemaRef `json:"schema"`
 }
 
 /*
