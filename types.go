@@ -37,6 +37,7 @@ type UnionElement struct {
 	*KeyTextAreaInputFormElement
 	*ReusableElement
 	*Editor
+	*AnchorElement
 }
 
 func (u UnionElement) MarshalJSON() ([]byte, error) {
@@ -71,6 +72,8 @@ func (u UnionElement) MarshalJSON() ([]byte, error) {
 		return json.Marshal(u.ReusableElement)
 	case u.Editor != nil:
 		return json.Marshal(u.Editor)
+	case u.AnchorElement != nil:
+		return json.Marshal(u.AnchorElement)
 	}
 	return nil, nil
 }
@@ -199,6 +202,13 @@ func (u *UnionElement) UnmarshalJSON(data []byte) error {
 			return err
 		}
 		u.Editor = &e
+	case "anchor":
+		var e AnchorElement
+		err = json.Unmarshal(data, &e)
+		if err != nil {
+			return err
+		}
+		u.AnchorElement = &e
 	default:
 		return fmt.Errorf("unknown element type %s", t.Type)
 	}
@@ -364,6 +374,7 @@ type TextareaElement struct {
 	If     string    `json:"if,omitempty"`
 	Type   string    `json:"type"`
 	Schema SchemaRef `json:"schema"`
+	Label  *Label    `json:"label,omitempty"`
 }
 
 /*
@@ -410,6 +421,7 @@ type RadioElement struct {
 	HasDescription                bool          `json:"hasDescription,omitempty"`
 	Options                       *UnionOptions `json:"options,omitempty"`
 	Individualitemdisabilitycheck string        `json:"individualItemDisabilityCheck,omitempty"`
+	Disabled                      bool          `json:"disabled,omitempty"`
 }
 
 /*
@@ -540,6 +552,9 @@ type SingleStepForm struct {
 	Element       *SingleStepFormElement   `json:"element,omitempty"`
 	CustomClass   string                   `json:"customClass,omitempty"`
 	ShowLabel     bool                     `json:"show_label,omitempty"`
+	HideForm      bool                     `json:"hideForm,omitempty"`
+	Computed      string                   `json:"computed,omitempty"`
+	KeepEmpty     bool                     `json:"keepEmpty,omitempty"`
 }
 
 type SingleStepFormElement struct {
@@ -556,6 +571,7 @@ type TableContentEntry struct {
 	Label         *Label              `json:"label,omitempty"`
 	TableContents []TableContentEntry `json:"tableContents,omitempty"`
 	Required      bool                `json:"required,omitempty"`
+	OnChange      string              `json:"onChange,omitempty"`
 }
 
 type SingleStepFormArray struct {
@@ -573,7 +589,11 @@ type SingleStepFormArray struct {
 		Elements      []UnionElement           `json:"elements,omitempty"`
 		Type          string                   `json:"type,omitempty"`
 	} `json:"element,omitempty"`
-	Discriminator map[string]Discriminator `json:"discriminator,omitempty"`
+	Discriminator                 map[string]Discriminator `json:"discriminator,omitempty"`
+	IndividualItemDisabilityCheck string                   `json:"individualItemDisabilityCheck,omitempty"`
+	NewItemValidator              string                   `json:"newItemValidator,omitempty"`
+	OnChange                      string                   `json:"onChange,omitempty"`
+	Computed                      string                   `json:"computed,omitempty"`
 }
 
 /*
@@ -650,6 +670,7 @@ type Discriminator struct {
 	Type                 string                `json:"type,omitempty"`
 	AdditionalProperties *AdditionalProperties `json:"additionalProperties,omitempty"`
 	Default              *StringBool           `json:"default,omitempty"`
+	EmitAs               string                `json:"emitAs,omitempty"`
 }
 
 type AdditionalProperties struct {
@@ -657,12 +678,13 @@ type AdditionalProperties struct {
 }
 
 type ConfigureOptionsElement struct {
-	Cluster         ClusterRef     `json:"cluster"`
-	HasDependencies bool           `json:"hasDependencies"`
-	HasDescription  bool           `json:"hasDescription"`
-	Options         []EditorOption `json:"options"`
-	Owner           OwnerRef       `json:"owner"`
-	Type            string         `json:"type"`
+	Cluster                       ClusterRef     `json:"cluster"`
+	HasDependencies               bool           `json:"hasDependencies"`
+	HasDescription                bool           `json:"hasDescription"`
+	Options                       []EditorOption `json:"options"`
+	Owner                         OwnerRef       `json:"owner"`
+	Type                          string         `json:"type"`
+	IndividualItemDisabilityCheck string         `json:"individualItemDisabilityCheck,omitempty"`
 }
 
 type ClusterRef struct {
@@ -702,11 +724,12 @@ type EditorOptionDependency struct {
 }
 */
 type MultiselectElement struct {
-	Computed string    `json:"computed,omitempty"`
-	Fetch    string    `json:"fetch"`
-	Label    *Label    `json:"label,omitempty"`
-	Schema   SchemaRef `json:"schema"`
-	Type     string    `json:"type"`
+	Computed               string    `json:"computed,omitempty"`
+	Fetch                  string    `json:"fetch"`
+	Label                  *Label    `json:"label,omitempty"`
+	Schema                 SchemaRef `json:"schema"`
+	Type                   string    `json:"type"`
+	AllowUserDefinedOption bool      `json:"allowUserDefinedOption,omitempty"`
 }
 
 /*
@@ -750,22 +773,37 @@ type ChartRef struct {
 }
 
 type ReusableElement struct {
-	Alias          string               `json:"alias"`
-	Chart          ChartRef             `json:"chart"`
-	Label          *Label               `json:"label,omitempty"`
-	DataContext    map[string]SchemaRef `json:"dataContext,omitempty"`
-	If             string               `json:"if,omitempty"`
-	ModuleResolver string               `json:"moduleResolver"`
-	Schema         SchemaRef            `json:"schema"`
-	Type           string               `json:"type"`
-	ShowLabel      bool                 `json:"show_label,omitempty"`
+	Alias             string               `json:"alias"`
+	Chart             ChartRef             `json:"chart"`
+	Label             *Label               `json:"label,omitempty"`
+	DataContext       map[string]SchemaRef `json:"dataContext,omitempty"`
+	If                string               `json:"if,omitempty"`
+	ModuleResolver    string               `json:"moduleResolver"`
+	Schema            SchemaRef            `json:"schema"`
+	Type              string               `json:"type"`
+	ShowLabel         bool                 `json:"show_label,omitempty"`
+	FunctionCallbacks map[string]SchemaRef `json:"functionCallbacks,omitempty"`
+	Disabled          bool                 `json:"disabled,omitempty"`
 }
 
 type Editor struct {
-	Computed string    `json:"computed"`
+	Computed string    `json:"computed,omitempty"`
 	If       string    `json:"if,omitempty"`
 	Label    *Label    `json:"label"`
 	OnChange string    `json:"onChange,omitempty"`
 	Schema   SchemaRef `json:"schema"`
 	Type     string    `json:"type"`
+	Required bool      `json:"required,omitempty"`
+}
+
+type AnchorElement struct {
+	CustomClass string    `json:"customClass"`
+	Label       *Label    `json:"label,omitempty"`
+	Type        string    `json:"type"`
+	URL         AnchorURL `json:"url"`
+}
+
+type AnchorURL struct {
+	Params map[string]SchemaRef `json:"params"`
+	Path   string               `json:"path"`
 }
