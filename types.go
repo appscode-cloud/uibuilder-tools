@@ -801,6 +801,7 @@ type AnchorElement struct {
 	Label       *Label    `json:"label,omitempty"`
 	Type        string    `json:"type"`
 	URL         AnchorURL `json:"url"`
+	If          string    `json:"if,omitempty"`
 }
 
 type AnchorURL struct {
