@@ -421,7 +421,7 @@ type RadioElement struct {
 	HasDescription                bool          `json:"hasDescription,omitempty"`
 	Options                       *UnionOptions `json:"options,omitempty"`
 	Individualitemdisabilitycheck string        `json:"individualItemDisabilityCheck,omitempty"`
-	Disabled                      bool          `json:"disabled,omitempty"`
+	Disabled                      *StringBool   `json:"disabled,omitempty"`
 	Fetch                         string        `json:"fetch,omitempty"`
 }
 
@@ -629,9 +629,9 @@ type ListInputForm struct {
 }
 
 type MultiStepForm struct {
-	Type            string              `json:"type"`
-	HasPreviewPanel bool                `json:"hasPreviewPanel,omitempty"`
-	Steps           []MultiStepFormStep `json:"steps"`
+	Type                    string              `json:"type"`
+	HasPrevidisabledewPanel bool                `json:"hasPreviewPanel,omitempty"`
+	Steps                   []MultiStepFormStep `json:"steps"`
 }
 
 type MultiStepFormStep struct {
@@ -785,6 +785,8 @@ type ReusableElement struct {
 	ShowLabel         bool                 `json:"show_label,omitempty"`
 	FunctionCallbacks map[string]SchemaRef `json:"functionCallbacks,omitempty"`
 	Disabled          bool                 `json:"disabled,omitempty"`
+	Computed          string               `json:"computed,omitempty"`
+	HideForm          bool                 `json:"hideForm,omitempty"`
 }
 
 type Editor struct {
