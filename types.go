@@ -422,6 +422,7 @@ type RadioElement struct {
 	Options                       *UnionOptions `json:"options,omitempty"`
 	Individualitemdisabilitycheck string        `json:"individualItemDisabilityCheck,omitempty"`
 	Disabled                      bool          `json:"disabled,omitempty"`
+	Fetch                         string        `json:"fetch,omitempty"`
 }
 
 /*
