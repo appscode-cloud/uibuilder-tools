@@ -556,6 +556,15 @@ type SingleStepForm struct {
 	HideForm      bool                     `json:"hideForm,omitempty"`
 	Computed      string                   `json:"computed,omitempty"`
 	KeepEmpty     bool                     `json:"keepEmpty,omitempty"`
+	ToggleOption  *ToggleOption            `json:"toggleOption,omitempty"`
+}
+
+type ToggleOption struct {
+	ID                    string      `json:"id"`
+	Disabled              *StringBool `json:"disabled,omitempty"`
+	OnStatusFalse         string      `json:"onStatusFalse,omitempty"`
+	SetInitialStatusFalse bool        `json:"setInitialStatusFalse,omitempty"`
+	Show                  bool        `json:"show,omitempty"`
 }
 
 type SingleStepFormElement struct {
@@ -595,6 +604,8 @@ type SingleStepFormArray struct {
 	NewItemValidator              string                   `json:"newItemValidator,omitempty"`
 	OnChange                      string                   `json:"onChange,omitempty"`
 	Computed                      string                   `json:"computed,omitempty"`
+	IsCreateDisabled              bool                     `json:"isCreateDisabled,omitempty"`
+	Disabled                      *StringBool              `json:"disabled,omitempty"`
 }
 
 /*
@@ -620,12 +631,13 @@ type SingleStepFormArray struct {
    }
 */
 type ListInputForm struct {
-	If           string       `json:"if,omitempty"`
-	Schema       SchemaRef    `json:"schema"`
-	Haslinelabel bool         `json:"hasLineLabel,omitempty"`
-	Type         string       `json:"type"`
-	Element      InputElement `json:"element"`
-	Label        *Label       `json:"label"`
+	If                            string       `json:"if,omitempty"`
+	Schema                        SchemaRef    `json:"schema"`
+	Haslinelabel                  bool         `json:"hasLineLabel,omitempty"`
+	Type                          string       `json:"type"`
+	Element                       InputElement `json:"element"`
+	Label                         *Label       `json:"label"`
+	IndividualItemDisabilityCheck string       `json:"individualItemDisabilityCheck,omitempty"`
 }
 
 type MultiStepForm struct {
@@ -725,12 +737,13 @@ type EditorOptionDependency struct {
 }
 */
 type MultiselectElement struct {
-	Computed               string    `json:"computed,omitempty"`
-	Fetch                  string    `json:"fetch"`
-	Label                  *Label    `json:"label,omitempty"`
-	Schema                 SchemaRef `json:"schema"`
-	Type                   string    `json:"type"`
-	AllowUserDefinedOption bool      `json:"allowUserDefinedOption,omitempty"`
+	Computed                      string    `json:"computed,omitempty"`
+	Fetch                         string    `json:"fetch"`
+	Label                         *Label    `json:"label,omitempty"`
+	Schema                        SchemaRef `json:"schema"`
+	Type                          string    `json:"type"`
+	AllowUserDefinedOption        bool      `json:"allowUserDefinedOption,omitempty"`
+	IndividualItemDisabilityCheck string    `json:"individualItemDisabilityCheck,omitempty"`
 }
 
 /*
