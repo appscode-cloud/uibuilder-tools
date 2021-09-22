@@ -357,6 +357,7 @@ type InputElement struct {
 	Type        string      `json:"type"`
 	Schema      SchemaRef   `json:"schema"`
 	Required    *StringBool `json:"required,omitempty"`
+	MinValue    int         `json:"minValue,omitempty"`
 }
 
 /*
@@ -450,6 +451,7 @@ type SelectElement struct {
 	AllowUserDefinedOption bool          `json:"allowUserDefinedOption,omitempty"`
 	CustomClass            string        `json:"customClass,omitempty"`
 	Required               *StringBool   `json:"required,omitempty"`
+	KeepEmpty              bool          `json:"keepEmpty,omitempty"`
 }
 
 /*
@@ -557,6 +559,7 @@ type SingleStepForm struct {
 	Computed      string                   `json:"computed,omitempty"`
 	KeepEmpty     bool                     `json:"keepEmpty,omitempty"`
 	ToggleOption  *ToggleOption            `json:"toggleOption,omitempty"`
+	OnChange      string                   `json:"onChange,omitempty"`
 }
 
 type ToggleOption struct {
