@@ -47,7 +47,7 @@ var (
 )
 
 func main() {
-	var rootCmd = &cobra.Command{
+	rootCmd := &cobra.Command{
 		Use:   "uibuilder-schema-checker",
 		Short: "Check schema of ui-builder json",
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -231,7 +231,7 @@ func formatSchema(filename string) error {
 	if err != nil {
 		return err
 	}
-	return ioutil.WriteFile(filename, fmtyml, 0644)
+	return ioutil.WriteFile(filename, fmtyml, 0o644)
 }
 
 func checkUIBuilderSchema(filename string) (string, error) {
