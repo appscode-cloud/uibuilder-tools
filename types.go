@@ -588,27 +588,29 @@ type TableContentEntry struct {
 }
 
 type SingleStepFormArray struct {
-	Required      bool                `json:"required,omitempty"`
-	If            string              `json:"if,omitempty"`
-	Type          string              `json:"type"`
-	Label         *Label              `json:"label,omitempty"`
-	AddFormLabel  string              `json:"addFormLabel,omitempty"`
-	CustomClass   string              `json:"customClass,omitempty"`
-	Schema        SchemaRef           `json:"schema"`
-	TableContents []TableContentEntry `json:"tableContents,omitempty"`
-	Element       struct {
-		Discriminator map[string]Discriminator `json:"discriminator,omitempty"`
-		Label         *Label                   `json:"label,omitempty"`
-		Elements      []UnionElement           `json:"elements,omitempty"`
-		Type          string                   `json:"type,omitempty"`
-	} `json:"element,omitempty"`
-	Discriminator                 map[string]Discriminator `json:"discriminator,omitempty"`
-	IndividualItemDisabilityCheck string                   `json:"individualItemDisabilityCheck,omitempty"`
-	NewItemValidator              string                   `json:"newItemValidator,omitempty"`
-	OnChange                      string                   `json:"onChange,omitempty"`
-	Computed                      string                   `json:"computed,omitempty"`
-	IsCreateDisabled              bool                     `json:"isCreateDisabled,omitempty"`
-	Disabled                      *StringBool              `json:"disabled,omitempty"`
+	Required                      bool                       `json:"required,omitempty"`
+	If                            string                     `json:"if,omitempty"`
+	Type                          string                     `json:"type"`
+	Label                         *Label                     `json:"label,omitempty"`
+	AddFormLabel                  string                     `json:"addFormLabel,omitempty"`
+	CustomClass                   string                     `json:"customClass,omitempty"`
+	Schema                        SchemaRef                  `json:"schema"`
+	TableContents                 []TableContentEntry        `json:"tableContents,omitempty"`
+	Element                       SingleStepFormArrayElement `json:"element,omitempty"`
+	Discriminator                 map[string]Discriminator   `json:"discriminator,omitempty"`
+	IndividualItemDisabilityCheck string                     `json:"individualItemDisabilityCheck,omitempty"`
+	NewItemValidator              string                     `json:"newItemValidator,omitempty"`
+	OnChange                      string                     `json:"onChange,omitempty"`
+	Computed                      string                     `json:"computed,omitempty"`
+	IsCreateDisabled              bool                       `json:"isCreateDisabled,omitempty"`
+	Disabled                      *StringBool                `json:"disabled,omitempty"`
+}
+
+type SingleStepFormArrayElement struct {
+	Discriminator map[string]Discriminator `json:"discriminator,omitempty"`
+	Label         *Label                   `json:"label,omitempty"`
+	Elements      []UnionElement           `json:"elements,omitempty"`
+	Type          string                   `json:"type,omitempty"`
 }
 
 /*
