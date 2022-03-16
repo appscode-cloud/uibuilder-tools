@@ -70,7 +70,7 @@ func NewCheckCommand() *cobra.Command {
 }
 
 func checkDir(root string) error {
-	matches, err := filepath.Glob(filepath.Join(root, "**", "values.openapiv3_schema.yaml"))
+	matches, err := filepath.Glob(filepath.Join(root, "**", "ui"))
 	if err != nil {
 		return err
 	}
@@ -92,14 +92,22 @@ func checkDir(root string) error {
 			if err != nil {
 				return err
 			}
-			if !fmtOnly {
-				if err = checkFile(fp, path); err != nil {
+			schemaFile = filepath.Join(dir, "values.openapiv3_schema.yaml")
+			if !fmtOnly && fileExists(schemaFile) {
+				if err = checkFile(fp, schemaFile); err != nil {
 					return err
 				}
 			}
 		}
 	}
 	return nil
+}
+
+func fileExists(name string) bool {
+	if _, err := os.Stat(name); err == nil {
+		return true
+	}
+	return false
 }
 
 func checkFile(uiFile, schemaFile string) error {
@@ -247,7 +255,7 @@ func checkUIBuilderSchema(filename string) (string, error) {
 		return "", err
 	}
 
-	var spec UnionFormElement
+	var spec Document
 	err = yaml.Unmarshal(data, &spec)
 	if err != nil {
 		return "", err

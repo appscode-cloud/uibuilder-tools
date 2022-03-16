@@ -829,3 +829,67 @@ type AnchorURL struct {
 	Params map[string]SchemaRef `json:"params"`
 	Path   string               `json:"path"`
 }
+
+type Document struct {
+	*SingleStepForm
+	*SingleStepFormArray
+	*MultiStepForm
+}
+
+func (u Document) MarshalJSON() ([]byte, error) {
+	switch {
+	case u.SingleStepForm != nil:
+		return json.Marshal(u.SingleStepForm)
+	case u.SingleStepFormArray != nil:
+		return json.Marshal(u.SingleStepFormArray)
+	case u.MultiStepForm != nil:
+		return json.Marshal(u.MultiStepForm)
+	}
+	return nil, nil
+}
+
+func (u *Document) UnmarshalJSON(data []byte) error {
+	type TypedElement struct {
+		Type string `json:"type"`
+	}
+
+	var t TypedElement
+	err := json.Unmarshal(data, &t)
+	if err != nil {
+		return err
+	}
+	if t.Type == "" {
+		return fmt.Errorf("failed to detect type: %s", string(data))
+	}
+
+	if u == nil {
+		u = new(Document)
+	}
+
+	switch t.Type {
+	case "single-step-form":
+		var e SingleStepForm
+		err = json.Unmarshal(data, &e)
+		if err != nil {
+			return err
+		}
+		u.SingleStepForm = &e
+	case "single-step-form-array":
+		var e SingleStepFormArray
+		err = json.Unmarshal(data, &e)
+		if err != nil {
+			return err
+		}
+		u.SingleStepFormArray = &e
+	case "multi-step-form":
+		var e MultiStepForm
+		err = json.Unmarshal(data, &e)
+		if err != nil {
+			return err
+		}
+		u.MultiStepForm = &e
+	default:
+		return fmt.Errorf("unknown element type %s", t.Type)
+	}
+	return nil
+}

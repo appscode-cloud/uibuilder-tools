@@ -47,7 +47,7 @@ func NewUpdateVersionCommand() *cobra.Command {
 }
 
 func updateVersionsForDir(rootDir, version string) error {
-	matches, err := filepath.Glob(filepath.Join(rootDir, "**", "values.openapiv3_schema.yaml"))
+	matches, err := filepath.Glob(filepath.Join(rootDir, "**", "ui"))
 	if err != nil {
 		return err
 	}
@@ -80,12 +80,12 @@ func updateVersionForFile(filename string, version string) error {
 		return err
 	}
 
-	var original UnionFormElement
+	var original Document
 	err = yaml.Unmarshal(data, &original)
 	if err != nil {
 		return err
 	}
-	uvUnionFormElement(&original, version)
+	uvRootForm(&original, version)
 
 	// fix formatting of the input ui.json file
 	fmtyml, err := yaml.Marshal(original)
@@ -93,6 +93,18 @@ func updateVersionForFile(filename string, version string) error {
 		return err
 	}
 	return ioutil.WriteFile(filename, fmtyml, 0o644)
+}
+
+func uvRootForm(f *Document, version string) {
+	if f.SingleStepForm != nil {
+		uvSingleStepForm(f.SingleStepForm, version)
+	}
+	if f.SingleStepFormArray != nil {
+		uvSingleStepFormArray(f.SingleStepFormArray, version)
+	}
+	if f.MultiStepForm != nil {
+		uvMultiStepForm(f.MultiStepForm, version)
+	}
 }
 
 func uvUnionFormElement(f *UnionFormElement, version string) {
