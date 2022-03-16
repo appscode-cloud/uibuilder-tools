@@ -46,5 +46,6 @@ jobs:
             bin/uibuilder-schema-checker-linux-arm
             bin/uibuilder-schema-checker-linux-arm64
             bin/uibuilder-schema-checker-darwin-amd64
+            bin/uibuilder-schema-checker-darwin-arm64
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
