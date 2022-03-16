@@ -17,16 +17,18 @@ limitations under the License.
 package main
 
 import (
-	"gomodules.xyz/logs"
-	"k8s.io/klog/v2"
+	"github.com/spf13/cobra"
+	v "gomodules.xyz/x/version"
 )
 
-func main() {
-	rootCmd := NewRootCmd()
-	logs.Init(rootCmd, true)
-	defer logs.FlushLogs()
-
-	if err := rootCmd.Execute(); err != nil {
-		klog.Warningln(err)
+func NewRootCmd() *cobra.Command {
+	rootCmd := &cobra.Command{
+		Use:               "uibuilder-tools",
+		DisableAutoGenTag: true,
 	}
+	rootCmd.AddCommand(v.NewCmdVersion())
+
+	rootCmd.AddCommand(NewCheckCommand())
+
+	return rootCmd
 }

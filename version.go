@@ -17,16 +17,29 @@ limitations under the License.
 package main
 
 import (
-	"gomodules.xyz/logs"
-	"k8s.io/klog/v2"
+	v "gomodules.xyz/x/version"
 )
 
-func main() {
-	rootCmd := NewRootCmd()
-	logs.Init(rootCmd, true)
-	defer logs.FlushLogs()
+var (
+	Version         string
+	VersionStrategy string
+	GitTag          string
+	GitBranch       string
+	CommitHash      string
+	CommitTimestamp string
+	GoVersion       string
+	Compiler        string
+	Platform        string
+)
 
-	if err := rootCmd.Execute(); err != nil {
-		klog.Warningln(err)
-	}
+func init() {
+	v.Version.Version = Version
+	v.Version.VersionStrategy = VersionStrategy
+	v.Version.GitTag = GitTag
+	v.Version.GitBranch = GitBranch
+	v.Version.CommitHash = CommitHash
+	v.Version.CommitTimestamp = CommitTimestamp
+	v.Version.GoVersion = GoVersion
+	v.Version.Compiler = Compiler
+	v.Version.Platform = Platform
 }

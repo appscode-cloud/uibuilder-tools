@@ -15,7 +15,7 @@ SHELL=/bin/bash -o pipefail
 
 GO_PKG   := kmodules.xyz
 REPO     := $(notdir $(shell pwd))
-BIN      := uibuilder-schema-checker
+BIN      := uibuilder-tools
 COMPRESS ?= no
 
 # This version-strategy uses git tags to set the version string
