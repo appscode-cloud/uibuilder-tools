@@ -247,7 +247,7 @@ func checkUIBuilderSchema(filename string) (string, error) {
 		return "", err
 	}
 
-	var spec MultiStepForm
+	var spec UnionFormElement
 	err = yaml.Unmarshal(data, &spec)
 	if err != nil {
 		return "", err

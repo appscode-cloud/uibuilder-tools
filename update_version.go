@@ -32,17 +32,21 @@ func NewUpdateVersionCommand() *cobra.Command {
 		Use:   "update-version",
 		Short: "Update chart version of reusable components",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			return UpdateVersions(wizardDir, version)
+			if wizardDir == "" {
+				return updateVersionForFile(uiFile, version)
+			}
+			return updateVersionsForDir(wizardDir, version)
 		},
 	}
 	flags := cmd.Flags()
 	flags.StringVar(&wizardDir, "wizard-dir", wizardDir, "Path to wizard directory")
+	flags.StringVar(&uiFile, "ui-file", uiFile, "Path to ui.json file")
 	flags.StringVar(&version, "version", version, "Chart version to be used for reusable components")
 
 	return cmd
 }
 
-func UpdateVersions(rootDir, version string) error {
+func updateVersionsForDir(rootDir, version string) error {
 	matches, err := filepath.Glob(filepath.Join(rootDir, "**", "values.openapiv3_schema.yaml"))
 	if err != nil {
 		return err
@@ -60,33 +64,35 @@ func UpdateVersions(rootDir, version string) error {
 				continue
 			}
 			filename := filepath.Join(dir, "ui", f.Name())
-			fmt.Printf("processing file: %s\n", filename)
-			{
-				data, err := ioutil.ReadFile(filename)
-				if err != nil {
-					return err
-				}
-
-				var original MultiStepForm
-				err = yaml.Unmarshal(data, &original)
-				if err != nil {
-					return err
-				}
-				uvMultiStepForm(&original, version)
-
-				// fix formatting of the input ui.json file
-				fmtyml, err := yaml.Marshal(original)
-				if err != nil {
-					return err
-				}
-				err = ioutil.WriteFile(filename, fmtyml, 0o644)
-				if err != nil {
-					return err
-				}
+			if err := updateVersionForFile(filename, version); err != nil {
+				return err
 			}
 		}
 	}
 	return nil
+}
+
+func updateVersionForFile(filename string, version string) error {
+	fmt.Printf("processing file: %s\n", filename)
+
+	data, err := ioutil.ReadFile(filename)
+	if err != nil {
+		return err
+	}
+
+	var original UnionFormElement
+	err = yaml.Unmarshal(data, &original)
+	if err != nil {
+		return err
+	}
+	uvUnionFormElement(&original, version)
+
+	// fix formatting of the input ui.json file
+	fmtyml, err := yaml.Marshal(original)
+	if err != nil {
+		return err
+	}
+	return ioutil.WriteFile(filename, fmtyml, 0o644)
 }
 
 func uvUnionFormElement(f *UnionFormElement, version string) {
@@ -111,9 +117,9 @@ func uvUnionElement(f *UnionElement, version string) {
 }
 
 func uvMultiStepForm(form *MultiStepForm, version string) {
-	for i, step := range form.Steps {
-		uvMultiStepFormStep(&step, version)
-		form.Steps[i] = step
+	for i, e := range form.Steps {
+		uvMultiStepFormStep(&e, version)
+		form.Steps[i] = e
 	}
 }
 
