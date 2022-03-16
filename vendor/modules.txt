@@ -1,40 +1,47 @@
 # github.com/PuerkitoBio/purell v1.1.1
+## explicit
 github.com/PuerkitoBio/purell
 # github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578
+## explicit
 github.com/PuerkitoBio/urlesc
 # github.com/fsnotify/fsnotify v1.5.1
-## explicit
+## explicit; go 1.13
 # github.com/go-logr/logr v0.4.0
+## explicit; go 1.14
 github.com/go-logr/logr
 # github.com/go-openapi/jsonpointer v0.19.3 => github.com/go-openapi/jsonpointer v0.19.3
+## explicit; go 1.13
 github.com/go-openapi/jsonpointer
 # github.com/go-openapi/jsonreference v0.19.3 => github.com/go-openapi/jsonreference v0.19.3
-## explicit
+## explicit; go 1.13
 github.com/go-openapi/jsonreference
 # github.com/go-openapi/swag v0.19.5 => github.com/go-openapi/swag v0.19.5
+## explicit
 github.com/go-openapi/swag
 # github.com/inconshreveable/mousetrap v1.0.0
+## explicit
 github.com/inconshreveable/mousetrap
 # github.com/mailru/easyjson v0.7.0
-## explicit
+## explicit; go 1.12
 github.com/mailru/easyjson/buffer
 github.com/mailru/easyjson/jlexer
 github.com/mailru/easyjson/jwriter
 # github.com/mattn/go-colorable v0.1.9
-## explicit
+## explicit; go 1.13
 # github.com/mattn/go-isatty v0.0.14
-## explicit
+## explicit; go 1.12
 # github.com/onsi/ginkgo v1.16.4
-## explicit
+## explicit; go 1.15
 # github.com/onsi/gomega v1.13.0
-## explicit
+## explicit; go 1.14
 # github.com/sergi/go-diff v1.2.0
-## explicit
+## explicit; go 1.12
 github.com/sergi/go-diff/diffmatchpatch
 # github.com/spf13/cobra v1.2.1
-## explicit
+## explicit; go 1.14
 github.com/spf13/cobra
 # github.com/spf13/pflag v1.0.5
+## explicit; go 1.12
 github.com/spf13/pflag
 # github.com/yudai/gojsondiff v1.0.0
 ## explicit
@@ -46,38 +53,43 @@ github.com/yudai/golcs
 # github.com/yudai/pp v2.0.1+incompatible
 ## explicit
 # golang.org/x/net v0.0.0-20210428140749-89ef3d95e781
+## explicit; go 1.11
 golang.org/x/net/idna
 # golang.org/x/sys v0.0.0-20210817190340-bfb29a6856f2
-## explicit
+## explicit; go 1.17
 # golang.org/x/text v0.3.7
-## explicit
+## explicit; go 1.17
 golang.org/x/text/secure/bidirule
 golang.org/x/text/transform
 golang.org/x/text/unicode/bidi
 golang.org/x/text/unicode/norm
 golang.org/x/text/width
 # gomodules.xyz/clock v0.0.0-20200817085942-06523dba733f
+## explicit; go 1.14
 gomodules.xyz/clock
 # gomodules.xyz/flags v0.1.3
+## explicit; go 1.16
 gomodules.xyz/flags
 # gomodules.xyz/logs v0.0.6
-## explicit
+## explicit; go 1.16
 gomodules.xyz/logs
 # gomodules.xyz/sets v0.2.1
-## explicit
+## explicit; go 1.14
 gomodules.xyz/sets
 # gomodules.xyz/wait v0.2.0
+## explicit; go 1.14
 gomodules.xyz/wait
 # gopkg.in/yaml.v2 v2.4.0
+## explicit; go 1.15
 gopkg.in/yaml.v2
 # k8s.io/apimachinery v0.21.1 => github.com/kmodules/apimachinery v0.21.2-rc.0.0.20210617231004-332981b97d2d
-## explicit
+## explicit; go 1.16
 k8s.io/apimachinery/pkg/util/runtime
 # k8s.io/klog/v2 v2.9.0
-## explicit
+## explicit; go 1.13
 k8s.io/klog/v2
 # sigs.k8s.io/yaml v1.2.0
-## explicit
+## explicit; go 1.12
 sigs.k8s.io/yaml
 # bitbucket.org/ww/goautoneg => gomodules.xyz/goautoneg v0.0.0-20120707110453-a547fc61f48d
 # cloud.google.com/go => cloud.google.com/go v0.54.0
