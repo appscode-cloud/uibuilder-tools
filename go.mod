@@ -7,7 +7,7 @@ require (
 	github.com/spf13/cobra v1.2.1
 	github.com/yudai/gojsondiff v1.0.0
 	gomodules.xyz/logs v0.0.6
-	gomodules.xyz/x v0.0.13
+	gomodules.xyz/x v0.0.10
 	k8s.io/klog/v2 v2.9.0
 	sigs.k8s.io/yaml v1.2.0
 )
