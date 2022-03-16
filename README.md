@@ -1,1 +1,1 @@
-# uibuilder-schema-checker
+# uibuilder-tools

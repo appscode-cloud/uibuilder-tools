@@ -42,10 +42,10 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
-            bin/uibuilder-schema-checker-linux-amd64
-            bin/uibuilder-schema-checker-linux-arm
-            bin/uibuilder-schema-checker-linux-arm64
-            bin/uibuilder-schema-checker-darwin-amd64
-            bin/uibuilder-schema-checker-darwin-arm64
+            bin/uibuilder-tools-linux-amd64
+            bin/uibuilder-tools-linux-arm
+            bin/uibuilder-tools-linux-arm64
+            bin/uibuilder-tools-darwin-amd64
+            bin/uibuilder-tools-darwin-arm64
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
