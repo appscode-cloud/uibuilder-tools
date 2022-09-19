@@ -19,7 +19,6 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -76,7 +75,7 @@ func checkDir(root string) error {
 	}
 	for _, path := range matches {
 		dir := filepath.Dir(path)
-		uifiles, err := ioutil.ReadDir(filepath.Join(dir, "ui"))
+		uifiles, err := os.ReadDir(filepath.Join(dir, "ui"))
 		if os.IsNotExist(err) {
 			continue
 		} else if err != nil {
@@ -125,7 +124,7 @@ func checkFile(uiFile, schemaFile string) error {
 }
 
 func checkJsonReference(uiFile, schemaFile string) error {
-	data, err := ioutil.ReadFile(uiFile)
+	data, err := os.ReadFile(uiFile)
 	if err != nil {
 		return err
 	}
@@ -135,7 +134,7 @@ func checkJsonReference(uiFile, schemaFile string) error {
 		return err
 	}
 
-	data, err = ioutil.ReadFile(schemaFile)
+	data, err = os.ReadFile(schemaFile)
 	if err != nil {
 		return err
 	}
@@ -220,7 +219,7 @@ func r1(ref string, schema map[string]interface{}, curPath string) error {
 }
 
 func formatSchema(filename string) error {
-	data, err := ioutil.ReadFile(filename)
+	data, err := os.ReadFile(filename)
 	if err != nil {
 		return err
 	}
@@ -236,11 +235,11 @@ func formatSchema(filename string) error {
 	if err != nil {
 		return err
 	}
-	return ioutil.WriteFile(filename, fmtyml, 0o644)
+	return os.WriteFile(filename, fmtyml, 0o644)
 }
 
 func checkUIBuilderSchema(filename string) (string, error) {
-	data, err := ioutil.ReadFile(filename)
+	data, err := os.ReadFile(filename)
 	if err != nil {
 		return "", err
 	}

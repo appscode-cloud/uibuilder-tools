@@ -318,13 +318,13 @@ func (u *StringBool) UnmarshalJSON(data []byte) error {
 }
 
 /*
-{
-  "label": {
-	 "text": "labels.basic_info",
-	 "hasLine": true
-  },
-  "type": "label-element"
-}
+	{
+	  "label": {
+		 "text": "labels.basic_info",
+		 "hasLine": true
+	  },
+	  "type": "label-element"
+	}
 */
 type LabelElement struct {
 	If          string `json:"if,omitempty"`
@@ -334,16 +334,16 @@ type LabelElement struct {
 }
 
 /*
-   {
-      "if": "showAuthPasswordField",
-      "label": {
-         "text": "labels.database.secret"
-      },
-      "type": "input",
-      "schema": {
-         "$ref": "schema#/properties/resources/properties/secretAuth/properties/metadata/properties/name"
-      }
-   }
+	{
+	   "if": "showAuthPasswordField",
+	   "label": {
+	      "text": "labels.database.secret"
+	   },
+	   "type": "input",
+	   "schema": {
+	      "$ref": "schema#/properties/resources/properties/secretAuth/properties/metadata/properties/name"
+	   }
+	}
 */
 type InputElement struct {
 	If          string      `json:"if,omitempty"`
@@ -362,15 +362,15 @@ type InputElement struct {
 }
 
 /*
-{
-  "label": {
-    "text": "labels.description"
-  },
-  "schema": {
-    "$ref": "discriminator#/properties/users/items/properties/description"
-  },
-  "type": "textarea"
-}
+	{
+	  "label": {
+	    "text": "labels.description"
+	  },
+	  "schema": {
+	    "$ref": "discriminator#/properties/users/items/properties/description"
+	  },
+	  "type": "textarea"
+	}
 */
 type TextareaElement struct {
 	If     string    `json:"if,omitempty"`
@@ -380,38 +380,38 @@ type TextareaElement struct {
 }
 
 /*
-{
-  "label": {
-	 "text": "labels.terminationPolicy"
-  },
-  "schema": {
-	 "$ref": "schema#/properties/resources/properties/kubedbComMongoDB/properties/spec/properties/terminationPolicy"
-  },
-  "type": "radio",
-  "hasDescription": true,
-  "options": [
-	 {
-		"value": "Delete",
-		"text": "options.terminationPolicy.delete.label",
-		"description": "options.terminationPolicy.delete.description"
-	 },
-	 {
-		"value": "Halt",
-		"text": "options.terminationPolicy.halt.label",
-		"description": "options.terminationPolicy.halt.description"
-	 },
-	 {
-		"value": "WipeOut",
-		"text": "options.terminationPolicy.wipeOut.label",
-		"description": "options.terminationPolicy.wipeOut.description"
-	 },
-	 {
-		"value": "DoNotTerminate",
-		"text": "options.terminationPolicy.doNotTerminate.label",
-		"description": "options.terminationPolicy.doNotTerminate.description"
-	 }
-  ]
-}
+	{
+	  "label": {
+		 "text": "labels.terminationPolicy"
+	  },
+	  "schema": {
+		 "$ref": "schema#/properties/resources/properties/kubedbComMongoDB/properties/spec/properties/terminationPolicy"
+	  },
+	  "type": "radio",
+	  "hasDescription": true,
+	  "options": [
+		 {
+			"value": "Delete",
+			"text": "options.terminationPolicy.delete.label",
+			"description": "options.terminationPolicy.delete.description"
+		 },
+		 {
+			"value": "Halt",
+			"text": "options.terminationPolicy.halt.label",
+			"description": "options.terminationPolicy.halt.description"
+		 },
+		 {
+			"value": "WipeOut",
+			"text": "options.terminationPolicy.wipeOut.label",
+			"description": "options.terminationPolicy.wipeOut.description"
+		 },
+		 {
+			"value": "DoNotTerminate",
+			"text": "options.terminationPolicy.doNotTerminate.label",
+			"description": "options.terminationPolicy.doNotTerminate.description"
+		 }
+	  ]
+	}
 */
 type RadioElement struct {
 	If                            string        `json:"if,omitempty"`
@@ -428,16 +428,16 @@ type RadioElement struct {
 }
 
 /*
-{
-  "label": {
-	 "text": "labels.database.version"
-  },
-  "fetch": "getMongoDbVersions|catalog.kubedb.com|v1alpha1|mongodbversions",
-  "type": "select",
-  "schema": {
-	 "$ref": "schema#/properties/resources/properties/kubedbComMongoDB/properties/spec/properties/version"
-  }
-}
+	{
+	  "label": {
+		 "text": "labels.database.version"
+	  },
+	  "fetch": "getMongoDbVersions|catalog.kubedb.com|v1alpha1|mongodbversions",
+	  "type": "select",
+	  "schema": {
+		 "$ref": "schema#/properties/resources/properties/kubedbComMongoDB/properties/spec/properties/version"
+	  }
+	}
 */
 type SelectElement struct {
 	If                     string        `json:"if,omitempty"`
@@ -456,30 +456,30 @@ type SelectElement struct {
 }
 
 /*
-{
-  "isArray": true,
-  "schema": {
-	 "$ref": "schema#/properties/resources/properties/appApplication/properties/metadata/properties/annotations"
-  },
-  "keys": {
-	 "label": {
-		"text": "labels.annotations.key"
-	 }
-  },
-  "label": {
-	 "text": "labels.annotations.label"
-  },
-  "type": "key-value-input-form",
-  "values": {
-	 "label": {
-		"text": "labels.annotations.value"
-	 },
-	 "type": "input",
-	 "schema": {
-		"$ref": "schema#/properties/resources/properties/appApplication/properties/metadata/properties/annotations/additionalProperties"
-	 }
-  }
-}
+	{
+	  "isArray": true,
+	  "schema": {
+		 "$ref": "schema#/properties/resources/properties/appApplication/properties/metadata/properties/annotations"
+	  },
+	  "keys": {
+		 "label": {
+			"text": "labels.annotations.key"
+		 }
+	  },
+	  "label": {
+		 "text": "labels.annotations.label"
+	  },
+	  "type": "key-value-input-form",
+	  "values": {
+		 "label": {
+			"text": "labels.annotations.value"
+		 },
+		 "type": "input",
+		 "schema": {
+			"$ref": "schema#/properties/resources/properties/appApplication/properties/metadata/properties/annotations/additionalProperties"
+		 }
+	  }
+	}
 */
 type KeyValueInputForm struct {
 	If                            string            `json:"if,omitempty"`
@@ -495,17 +495,17 @@ type KeyValueInputForm struct {
 }
 
 /*
-   {
-      "type": "switch",
-      "label": {
-         "text": "labels.enable_tls"
-      },
-      "schema": {
-         "$ref": "discriminator#/configureTLS"
-      },
-      "computed": "isValueExistInModel|/resources/kubedbComMongoDB/spec/tls",
-      "onChange": "onTlsConfigureChange"
-   }
+	{
+	   "type": "switch",
+	   "label": {
+	      "text": "labels.enable_tls"
+	   },
+	   "schema": {
+	      "$ref": "discriminator#/configureTLS"
+	   },
+	   "computed": "isValueExistInModel|/resources/kubedbComMongoDB/spec/tls",
+	   "onChange": "onTlsConfigureChange"
+	}
 */
 type SwitchElement struct {
 	Disabled *StringBool `json:"disabled,omitempty"`
@@ -518,32 +518,32 @@ type SwitchElement struct {
 }
 
 /*
-   {
-      "if": "showNewSecretCreateField",
-      "type": "single-step-form",
-      "schema": {
-         "$ref": "schema#/properties/resources/properties/secretAuth/properties/data"
-      },
-      "elements": [
-         {
-            "label": {
-               "text": "labels.new_secret_password",
-               "hasLine": true
-            },
-            "type": "label-element"
-         },
-         {
-            "if": "showNewSecretCreateField",
-            "label": {
-               "text": "labels.password"
-            },
-            "type": "input",
-            "schema": {
-               "$ref": "schema#/properties/resources/properties/secretAuth/properties/data/properties/password"
-            }
-         }
-      ]
-   }
+	{
+	   "if": "showNewSecretCreateField",
+	   "type": "single-step-form",
+	   "schema": {
+	      "$ref": "schema#/properties/resources/properties/secretAuth/properties/data"
+	   },
+	   "elements": [
+	      {
+	         "label": {
+	            "text": "labels.new_secret_password",
+	            "hasLine": true
+	         },
+	         "type": "label-element"
+	      },
+	      {
+	         "if": "showNewSecretCreateField",
+	         "label": {
+	            "text": "labels.password"
+	         },
+	         "type": "input",
+	         "schema": {
+	            "$ref": "schema#/properties/resources/properties/secretAuth/properties/data/properties/password"
+	         }
+	      }
+	   ]
+	}
 */
 type SingleStepForm struct {
 	Disabled      *StringBool              `json:"disabled,omitempty"`
@@ -615,26 +615,26 @@ type SingleStepFormArrayElement struct {
 }
 
 /*
-   {
-      "schema": {
-         "$ref": "schema#/properties/resources/properties/kubedbComMongoDB/properties/spec/properties/tls/properties/certificates/items/properties/dnsNames"
-      },
-      "hasLineLabel": true,
-      "type": "list-input-form",
-      "element": {
-         "label": {
-            "text": "labels.dns_name"
-         },
-         "schema": {
-            "$ref": "schema#/properties/resources/properties/kubedbComMongoDB/properties/spec/properties/tls/properties/certificates/items/properties/dnsNames/items"
-         },
-         "type": "input"
-      },
-      "label": {
-         "text": "labels.dns_names",
-         "hasLine": true
-      }
-   }
+	{
+	   "schema": {
+	      "$ref": "schema#/properties/resources/properties/kubedbComMongoDB/properties/spec/properties/tls/properties/certificates/items/properties/dnsNames"
+	   },
+	   "hasLineLabel": true,
+	   "type": "list-input-form",
+	   "element": {
+	      "label": {
+	         "text": "labels.dns_name"
+	      },
+	      "schema": {
+	         "$ref": "schema#/properties/resources/properties/kubedbComMongoDB/properties/spec/properties/tls/properties/certificates/items/properties/dnsNames/items"
+	      },
+	      "type": "input"
+	   },
+	   "label": {
+	      "text": "labels.dns_names",
+	      "hasLine": true
+	   }
+	}
 */
 type ListInputForm struct {
 	If                            string       `json:"if,omitempty"`
@@ -731,16 +731,16 @@ type EditorOptionDependency struct {
 }
 
 /*
-{
-   "fetch": "getImagePullSecrets",
-   "label": {
-      "text": "labels.image_pull_secrets"
-   },
-   "schema": {
-      "$ref": "schema#/properties/resources/properties/kubedbComMongoDB/properties/spec/properties/shardTopology/properties/shard/properties/podTemplate/properties/spec/properties/imagePullSecrets"
-   },
-   "type": "multiselect"
-}
+	{
+	   "fetch": "getImagePullSecrets",
+	   "label": {
+	      "text": "labels.image_pull_secrets"
+	   },
+	   "schema": {
+	      "$ref": "schema#/properties/resources/properties/kubedbComMongoDB/properties/spec/properties/shardTopology/properties/shard/properties/podTemplate/properties/spec/properties/imagePullSecrets"
+	   },
+	   "type": "multiselect"
+	}
 */
 type MultiselectElement struct {
 	Computed                      string    `json:"computed,omitempty"`
@@ -753,30 +753,30 @@ type MultiselectElement struct {
 }
 
 /*
-{
-    "isArray": true,
-    "keys": {
-        "label": {
-            "text": "labels.labels.key"
-        }
-    },
-    "label": {
-        "text": "labels.configuration_files"
-    },
-    "schema": {
-        "$ref": "schema#/properties/resources/properties/secret_config/properties/stringData"
-    },
-    "type": "key-text-area-input-form",
-    "values": {
-        "label": {
-            "text": "labels.labels.value"
-        },
-        "schema": {
-            "$ref": "schema#/properties/resources/properties/secret_config/properties/stringData/additionalProperties"
-        },
-        "type": "input"
-    }
-}
+	{
+	    "isArray": true,
+	    "keys": {
+	        "label": {
+	            "text": "labels.labels.key"
+	        }
+	    },
+	    "label": {
+	        "text": "labels.configuration_files"
+	    },
+	    "schema": {
+	        "$ref": "schema#/properties/resources/properties/secret_config/properties/stringData"
+	    },
+	    "type": "key-text-area-input-form",
+	    "values": {
+	        "label": {
+	            "text": "labels.labels.value"
+	        },
+	        "schema": {
+	            "$ref": "schema#/properties/resources/properties/secret_config/properties/stringData/additionalProperties"
+	        },
+	        "type": "input"
+	    }
+	}
 */
 type KeyTextAreaInputFormElement struct {
 	IsArray bool              `json:"isArray"`
