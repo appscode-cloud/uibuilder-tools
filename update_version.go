@@ -18,7 +18,6 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 
@@ -53,7 +52,7 @@ func updateVersionsForDir(rootDir, version string) error {
 	}
 	for _, path := range matches {
 		dir := filepath.Dir(path)
-		uifiles, err := ioutil.ReadDir(filepath.Join(dir, "ui"))
+		uifiles, err := os.ReadDir(filepath.Join(dir, "ui"))
 		if os.IsNotExist(err) {
 			continue
 		} else if err != nil {
@@ -75,7 +74,7 @@ func updateVersionsForDir(rootDir, version string) error {
 func updateVersionForFile(filename string, version string) error {
 	fmt.Printf("processing file: %s\n", filename)
 
-	data, err := ioutil.ReadFile(filename)
+	data, err := os.ReadFile(filename)
 	if err != nil {
 		return err
 	}
@@ -92,7 +91,7 @@ func updateVersionForFile(filename string, version string) error {
 	if err != nil {
 		return err
 	}
-	return ioutil.WriteFile(filename, fmtyml, 0o644)
+	return os.WriteFile(filename, fmtyml, 0o644)
 }
 
 func uvRootForm(f *Document, version string) {
