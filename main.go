@@ -22,11 +22,15 @@ import (
 )
 
 func main() {
+	if err := realMain(); err != nil {
+		klog.Fatal(err)
+	}
+}
+
+func realMain() error {
 	rootCmd := NewRootCmd()
 	logs.Init(rootCmd, true)
 	defer logs.FlushLogs()
 
-	if err := rootCmd.Execute(); err != nil {
-		klog.Warningln(err)
-	}
+	return rootCmd.Execute()
 }
