@@ -39,6 +39,10 @@ type UnionElement struct {
 	*ReusableElement
 	*Editor
 	*AnchorElement
+	*ArrayInputForm
+	*ResourceInputForm
+	*TimeInput
+	*Checkbox
 }
 
 func (u UnionElement) MarshalJSON() ([]byte, error) {
@@ -75,6 +79,14 @@ func (u UnionElement) MarshalJSON() ([]byte, error) {
 		return json.Marshal(u.Editor)
 	case u.AnchorElement != nil:
 		return json.Marshal(u.AnchorElement)
+	case u.ArrayInputForm != nil:
+		return json.Marshal(u.ArrayInputForm)
+	case u.ResourceInputForm != nil:
+		return json.Marshal(u.ResourceInputForm)
+	case u.TimeInput != nil:
+		return json.Marshal(u.TimeInput)
+	case u.Checkbox != nil:
+		return json.Marshal(u.Checkbox)
 	}
 	return nil, nil
 }
@@ -210,6 +222,34 @@ func (u *UnionElement) UnmarshalJSON(data []byte) error {
 			return err
 		}
 		u.AnchorElement = &e
+	case "array-input-form":
+		var e ArrayInputForm
+		err = json.Unmarshal(data, &e)
+		if err != nil {
+			return err
+		}
+		u.ArrayInputForm = &e
+	case "resource-input-form":
+		var e ResourceInputForm
+		err = json.Unmarshal(data, &e)
+		if err != nil {
+			return err
+		}
+		u.ResourceInputForm = &e
+	case "time-input":
+		var e TimeInput
+		err = json.Unmarshal(data, &e)
+		if err != nil {
+			return err
+		}
+		u.TimeInput = &e
+	case "checkbox":
+		var e Checkbox
+		err = json.Unmarshal(data, &e)
+		if err != nil {
+			return err
+		}
+		u.Checkbox = &e
 	default:
 		return fmt.Errorf("unknown element type %s", t.Type)
 	}
@@ -327,6 +367,7 @@ func (u *StringBool) UnmarshalJSON(data []byte) error {
 	}
 */
 type LabelElement struct {
+	Computed    string `json:"computed,omitempty"`
 	If          string `json:"if,omitempty"`
 	CustomClass string `json:"customClass,omitempty"`
 	Label       *Label `json:"label,omitempty"`
@@ -346,19 +387,25 @@ type LabelElement struct {
 	}
 */
 type InputElement struct {
-	If          string      `json:"if,omitempty"`
-	CustomClass string      `json:"customClass,omitempty"`
-	OnChange    string      `json:"onChange,omitempty"`
-	Computed    string      `json:"computed,omitempty"`
-	Decoder     string      `json:"decoder,omitempty"`
-	Encoder     string      `json:"encoder,omitempty"`
-	Disabled    *StringBool `json:"disabled,omitempty"`
-	HideValue   bool        `json:"hideValue,omitempty"`
-	Label       *Label      `json:"label,omitempty"`
-	Type        string      `json:"type"`
-	Schema      SchemaRef   `json:"schema"`
-	Required    *StringBool `json:"required,omitempty"`
-	MinValue    int         `json:"minValue,omitempty"`
+	If                   string          `json:"if,omitempty"`
+	CustomClass          string          `json:"customClass,omitempty"`
+	OnChange             string          `json:"onChange,omitempty"`
+	Computed             string          `json:"computed,omitempty"`
+	Decoder              string          `json:"decoder,omitempty"`
+	Encoder              string          `json:"encoder,omitempty"`
+	Disabled             *StringBool     `json:"disabled,omitempty"`
+	HideValue            bool            `json:"hideValue,omitempty"`
+	Label                *Label          `json:"label,omitempty"`
+	Type                 string          `json:"type"`
+	Schema               *SchemaRef      `json:"schema,omitempty"`
+	Required             *StringBool     `json:"required,omitempty"`
+	MinValue             int             `json:"minValue,omitempty"`
+	ValidationRuleObject *ValidationRule `json:"validationRuleObject,omitempty"`
+	Fetch                string          `json:"fetch,omitempty"`
+}
+
+type ValidationRule struct {
+	Regex string `json:"regex"`
 }
 
 /*
@@ -453,6 +500,20 @@ type SelectElement struct {
 	CustomClass            string        `json:"customClass,omitempty"`
 	Required               *StringBool   `json:"required,omitempty"`
 	KeepEmpty              bool          `json:"keepEmpty,omitempty"`
+	AddNewButton           *AddNewButton `json:"add_new_button,omitempty"`
+	Refresh                bool          `json:"refresh,omitempty"`
+}
+
+type AddNewButton struct {
+	Label  string    `json:"label"`
+	Target string    `json:"target"`
+	URL    AnchorURL `json:"url"`
+}
+
+type AnchorURL struct {
+	Function string               `json:"function,omitempty"`
+	Params   map[string]SchemaRef `json:"params,omitempty"`
+	Path     string               `json:"path,omitempty"`
 }
 
 /*
@@ -492,6 +553,7 @@ type KeyValueInputForm struct {
 	Type                          string            `json:"type"`
 	Values                        KVInputFormValues `json:"values,omitempty"`
 	Individualitemdisabilitycheck string            `json:"individualItemDisabilityCheck,omitempty"`
+	Disabled                      *StringBool       `json:"disabled,omitempty"`
 }
 
 /*
@@ -564,11 +626,14 @@ type SingleStepForm struct {
 }
 
 type ToggleOption struct {
-	ID                    string      `json:"id"`
-	Disabled              *StringBool `json:"disabled,omitempty"`
-	OnStatusFalse         string      `json:"onStatusFalse,omitempty"`
-	SetInitialStatusFalse bool        `json:"setInitialStatusFalse,omitempty"`
-	Show                  bool        `json:"show,omitempty"`
+	ID                          string      `json:"id"`
+	Disabled                    *StringBool `json:"disabled,omitempty"`
+	OnStatusFalse               string      `json:"onStatusFalse,omitempty"`
+	SetInitialStatusFalse       string      `json:"setInitialStatusFalse,omitempty"`
+	Show                        bool        `json:"show,omitempty"`
+	IgnoreInitialStatusFunction bool        `json:"ignoreInitialStatusFunction,omitempty"`
+	Schema                      *SchemaRef  `json:"schema,omitempty"`
+	OnStatusTrue                string      `json:"onStatusTrue,omitempty"`
 }
 
 type SingleStepFormElement struct {
@@ -586,6 +651,7 @@ type TableContentEntry struct {
 	TableContents []TableContentEntry `json:"tableContents,omitempty"`
 	Required      bool                `json:"required,omitempty"`
 	OnChange      string              `json:"onChange,omitempty"`
+	If            string              `json:"if,omitempty"`
 }
 
 type SingleStepFormArray struct {
@@ -612,6 +678,7 @@ type SingleStepFormArrayElement struct {
 	Label         *Label                   `json:"label,omitempty"`
 	Elements      []UnionElement           `json:"elements,omitempty"`
 	Type          string                   `json:"type,omitempty"`
+	Schema        *SchemaRef               `json:"schema,omitempty"`
 }
 
 /*
@@ -744,12 +811,13 @@ type EditorOptionDependency struct {
 */
 type MultiselectElement struct {
 	Computed                      string    `json:"computed,omitempty"`
-	Fetch                         string    `json:"fetch"`
+	Fetch                         string    `json:"fetch,omitempty"`
 	Label                         *Label    `json:"label,omitempty"`
 	Schema                        SchemaRef `json:"schema"`
 	Type                          string    `json:"type"`
 	AllowUserDefinedOption        bool      `json:"allowUserDefinedOption,omitempty"`
 	IndividualItemDisabilityCheck string    `json:"individualItemDisabilityCheck,omitempty"`
+	Options                       []string  `json:"options,omitempty"`
 }
 
 /*
@@ -806,16 +874,20 @@ type ReusableElement struct {
 	Disabled          bool                 `json:"disabled,omitempty"`
 	Computed          string               `json:"computed,omitempty"`
 	HideForm          bool                 `json:"hideForm,omitempty"`
+	CustomClass       string               `json:"customClass,omitempty"`
 }
 
 type Editor struct {
 	Computed string    `json:"computed,omitempty"`
 	If       string    `json:"if,omitempty"`
-	Label    *Label    `json:"label"`
+	Label    *Label    `json:"label,omitempty"`
 	OnChange string    `json:"onChange,omitempty"`
 	Schema   SchemaRef `json:"schema"`
 	Type     string    `json:"type"`
 	Required bool      `json:"required,omitempty"`
+	Decoder  string    `json:"decoder,omitempty"`
+	Encoder  string    `json:"encoder,omitempty"`
+	Language string    `json:"language,omitempty"`
 }
 
 type AnchorElement struct {
@@ -824,11 +896,55 @@ type AnchorElement struct {
 	Type        string    `json:"type"`
 	URL         AnchorURL `json:"url"`
 	If          string    `json:"if,omitempty"`
+	Target      string    `json:"target,omitempty"`
 }
 
-type AnchorURL struct {
-	Params map[string]SchemaRef `json:"params"`
-	Path   string               `json:"path"`
+type ArrayInputForm struct {
+	Element                       ArrayInputFormElement `json:"element"`
+	IndividualItemVisibilityCheck string                `json:"individualItemVisibilityCheck,omitempty"`
+	Schema                        SchemaRef             `json:"schema"`
+	Type                          string                `json:"type"`
+	If                            string                `json:"if,omitempty"`
+	Label                         *Label                `json:"label,omitempty"`
+	ShowLabel                     bool                  `json:"show_label,omitempty"`
+}
+
+type ArrayInputFormElement struct {
+	Elements      []UnionElement           `json:"elements,omitempty"`
+	Discriminator map[string]Discriminator `json:"discriminator,omitempty"`
+	HideForm      bool                     `json:"hideForm"`
+	Schema        SchemaRef                `json:"schema"`
+	ShowLabel     bool                     `json:"show_label,omitempty"`
+	ToggleOption  *ToggleOption            `json:"toggleOption,omitempty"`
+	Type          string                   `json:"type"`
+	If            string                   `json:"if,omitempty"`
+	Label         *Label                   `json:"label,omitempty"`
+}
+
+type ResourceInputForm struct {
+	Label    *Label      `json:"label"`
+	Schema   SchemaRef   `json:"schema"`
+	Type     string      `json:"type"`
+	If       string      `json:"if,omitempty"`
+	Computed string      `json:"computed,omitempty"`
+	Disabled *StringBool `json:"disabled,omitempty"`
+}
+
+type TimeInput struct {
+	Label       *Label    `json:"label"`
+	Schema      SchemaRef `json:"schema"`
+	Type        string    `json:"type"`
+	CustomClass string    `json:"customClass,omitempty"`
+}
+
+type Checkbox struct {
+	Computed                      string    `json:"computed"`
+	Fetch                         string    `json:"fetch"`
+	HasDescription                bool      `json:"hasDescription"`
+	IndividualItemDisabilityCheck string    `json:"individualItemDisabilityCheck"`
+	OnChange                      string    `json:"onChange"`
+	Schema                        SchemaRef `json:"schema"`
+	Type                          string    `json:"type"`
 }
 
 type Document struct {
