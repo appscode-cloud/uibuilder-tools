@@ -755,7 +755,7 @@ type KVInputFormValues struct {
 type Discriminator struct {
 	Type                 string                `json:"type,omitempty"`
 	AdditionalProperties *AdditionalProperties `json:"additionalProperties,omitempty"`
-	Default              *StringBool           `json:"default,omitempty"`
+	Default              json.RawMessage       `json:"default,omitempty"`
 	EmitAs               string                `json:"emitAs,omitempty"`
 }
 
@@ -912,7 +912,7 @@ type ArrayInputForm struct {
 type ArrayInputFormElement struct {
 	Elements      []UnionElement           `json:"elements,omitempty"`
 	Discriminator map[string]Discriminator `json:"discriminator,omitempty"`
-	HideForm      bool                     `json:"hideForm"`
+	HideForm      bool                     `json:"hideForm,omitempty"`
 	Schema        SchemaRef                `json:"schema"`
 	ShowLabel     bool                     `json:"show_label,omitempty"`
 	ToggleOption  *ToggleOption            `json:"toggleOption,omitempty"`
