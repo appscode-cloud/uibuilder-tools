@@ -172,7 +172,7 @@ func checkRef(uijson, schema map[string]interface{}, path string) (errlist []err
 				errlist = append(errlist, checkRef(entry, schema, fmt.Sprintf("%s%s[%d].", path, k, i))...)
 			}
 		case string:
-			if k == "$ref" && strings.HasPrefix(u, "schema#/") {
+			if k == "$ref" && strings.HasPrefix(u, "schema#/") && !strings.Contains(u, "/$dyn") {
 				curPath := path + k + "."
 				errlist = append(errlist, r1(u, schema, curPath))
 			}
