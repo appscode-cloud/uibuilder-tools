@@ -195,6 +195,29 @@ func r1(ref string, schema map[string]interface{}, curPath string) error {
 	}
 
 	parts := strings.Split(u, "/")
+
+	preserveUnknownFields := func() bool {
+		obj := schema
+		for i := 1; i < len(parts); i++ {
+			v, ok := obj[parts[i]]
+			if !ok {
+				return false
+			}
+			obj, ok = v.(map[string]any)
+			if !ok {
+				return false
+			}
+			v, ok = obj["x-kubernetes-preserve-unknown-fields"]
+			if ok && v.(bool) {
+				return true
+			}
+		}
+		return false
+	}
+	if preserveUnknownFields() {
+		return nil
+	}
+
 	if len(parts) >= 3 && parts[len(parts)-2] == "properties" {
 		nu := strings.Join(parts[:len(parts)-2], "/")
 
