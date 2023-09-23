@@ -818,6 +818,8 @@ type MultiselectElement struct {
 	AllowUserDefinedOption        bool      `json:"allowUserDefinedOption,omitempty"`
 	IndividualItemDisabilityCheck string    `json:"individualItemDisabilityCheck,omitempty"`
 	Options                       []string  `json:"options,omitempty"`
+	If                            string    `json:"if,omitempty"`
+	OnChange                      string    `json:"onChange,omitempty"`
 }
 
 /*
