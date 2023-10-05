@@ -614,7 +614,7 @@ type SingleStepForm struct {
 	Schema        *SchemaRef               `json:"schema,omitempty"`
 	If            string                   `json:"if,omitempty"`
 	Discriminator map[string]Discriminator `json:"discriminator,omitempty"`
-	Elements      []UnionElement           `json:"elements,omitempty"`
+	Elements      []UnionElement           `json:"elements"`
 	Element       *SingleStepFormElement   `json:"element,omitempty"`
 	CustomClass   string                   `json:"customClass,omitempty"`
 	ShowLabel     bool                     `json:"show_label,omitempty"`
