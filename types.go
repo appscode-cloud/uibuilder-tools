@@ -402,6 +402,7 @@ type InputElement struct {
 	MinValue             int             `json:"minValue,omitempty"`
 	ValidationRuleObject *ValidationRule `json:"validationRuleObject,omitempty"`
 	Fetch                string          `json:"fetch,omitempty"`
+	InputType            string          `json:"inputType,omitempty"`
 }
 
 type ValidationRule struct {
