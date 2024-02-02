@@ -503,6 +503,7 @@ type SelectElement struct {
 	KeepEmpty              bool          `json:"keepEmpty,omitempty"`
 	AddNewButton           *AddNewButton `json:"add_new_button,omitempty"`
 	Refresh                bool          `json:"refresh,omitempty"`
+	Sortable               bool          `json:"sortable,omitempty"`
 }
 
 type AddNewButton struct {
