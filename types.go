@@ -738,6 +738,33 @@ type Label struct {
 	IsSubsection bool   `json:"isSubsection,omitempty"`
 }
 
+/*
+	type AlertInfo = {
+	  readonly show?: boolean
+	  type: 'success' | 'info' | 'error'
+	  hideIcon?: boolean
+	  actionButton?: {
+	    show: boolean
+	    title: string
+	    iconClass: string
+	    action: unknown
+	  }
+	}
+*/
+type AlertInfo struct {
+	Show bool `json:"show,omitempty"`
+	Type
+	HideIcon     bool         `json:"hideIcon,omitempty"`
+	ActionButton ActionButton `json:"actionButton"`
+}
+
+type ActionButton struct {
+	Show      bool            `json:"show"`
+	Title     string          `json:"title"`
+	IconClass string          `json:"iconClass"`
+	Action    json.RawMessage `json:"action"`
+}
+
 type RadioElementOption struct {
 	Value       StringBool `json:"value,omitempty"`
 	Text        string     `json:"text,omitempty"`
