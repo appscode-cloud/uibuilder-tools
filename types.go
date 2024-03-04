@@ -366,12 +366,72 @@ func (u *StringBool) UnmarshalJSON(data []byte) error {
 	  "type": "label-element"
 	}
 */
+
+type AlertType int
+
+const (
+	Success AlertType = iota
+	Info
+	Error
+)
+
+func (at AlertType) MarshalJSON() ([]byte, error) {
+	switch at {
+	case Success:
+		return json.Marshal("success")
+	case Info:
+		return json.Marshal("info")
+	case Error:
+		return json.Marshal("error")
+	default:
+		return nil, fmt.Errorf("invalid AlertType value")
+	}
+}
+
+func (at *AlertType) UnmarshalJSON(data []byte) error {
+	var typeValue interface{} // Use interface{} to accept both string and integer values
+	err := json.Unmarshal(data, &typeValue)
+	if err != nil {
+		return err
+	}
+
+	switch v := typeValue.(type) {
+	case string:
+		switch v {
+		case "success":
+			*at = Success
+		case "info":
+			*at = Info
+		case "error":
+			*at = Error
+		default:
+			return fmt.Errorf("invalid AlertType value: %s", v)
+		}
+	case float64, int:
+		switch int(v.(float64)) {
+		case int(Success):
+			*at = Success
+		case int(Info):
+			*at = Info
+		case int(Error):
+			*at = Error
+		default:
+			return fmt.Errorf("invalid AlertType value: %d", int(v.(float64)))
+		}
+	default:
+		return fmt.Errorf("invalid AlertType value: %v", v)
+	}
+
+	return nil
+}
+
 type LabelElement struct {
-	Computed    string `json:"computed,omitempty"`
-	If          string `json:"if,omitempty"`
-	CustomClass string `json:"customClass,omitempty"`
-	Label       *Label `json:"label,omitempty"`
-	Type        string `json:"type"`
+	Computed    string     `json:"computed,omitempty"`
+	If          string     `json:"if,omitempty"`
+	CustomClass string     `json:"customClass,omitempty"`
+	Label       *Label     `json:"label,omitempty"`
+	Type        string     `json:"type"`
+	AlertInfo   *AlertInfo `json:"alertInfo,omitempty"`
 }
 
 /*
@@ -738,24 +798,11 @@ type Label struct {
 	IsSubsection bool   `json:"isSubsection,omitempty"`
 }
 
-/*
-	type AlertInfo = {
-	  readonly show?: boolean
-	  type: 'success' | 'info' | 'error'
-	  hideIcon?: boolean
-	  actionButton?: {
-	    show: boolean
-	    title: string
-	    iconClass: string
-	    action: unknown
-	  }
-	}
-*/
 type AlertInfo struct {
-	Show bool `json:"show,omitempty"`
-	Type
-	HideIcon     bool         `json:"hideIcon,omitempty"`
-	ActionButton ActionButton `json:"actionButton"`
+	Show         bool          `json:"show,omitempty"`
+	Type         *AlertType    `json:"type"`
+	HideIcon     bool          `json:"hideIcon,omitempty"`
+	ActionButton *ActionButton `json:"actionButton,omitempty"`
 }
 
 type ActionButton struct {
