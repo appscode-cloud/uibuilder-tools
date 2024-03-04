@@ -19,6 +19,7 @@ package main
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 )
 
@@ -389,37 +390,20 @@ func (at AlertType) MarshalJSON() ([]byte, error) {
 }
 
 func (at *AlertType) UnmarshalJSON(data []byte) error {
-	var typeValue interface{} // Use interface{} to accept both string and integer values
-	err := json.Unmarshal(data, &typeValue)
-	if err != nil {
+	var typeValue string
+	if err := json.Unmarshal(data, &typeValue); err != nil {
 		return err
 	}
 
-	switch v := typeValue.(type) {
-	case string:
-		switch v {
-		case "success":
-			*at = Success
-		case "info":
-			*at = Info
-		case "error":
-			*at = Error
-		default:
-			return fmt.Errorf("invalid AlertType value: %s", v)
-		}
-	case float64, int:
-		switch int(v.(float64)) {
-		case int(Success):
-			*at = Success
-		case int(Info):
-			*at = Info
-		case int(Error):
-			*at = Error
-		default:
-			return fmt.Errorf("invalid AlertType value: %d", int(v.(float64)))
-		}
+	switch typeValue {
+	case "success":
+		*at = Success
+	case "info":
+		*at = Info
+	case "error":
+		*at = Error
 	default:
-		return fmt.Errorf("invalid AlertType value: %v", v)
+		return errors.New("invalid AlertType value: " + typeValue)
 	}
 
 	return nil
