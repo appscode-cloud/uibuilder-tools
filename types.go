@@ -19,6 +19,7 @@ package main
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 )
 
@@ -366,12 +367,55 @@ func (u *StringBool) UnmarshalJSON(data []byte) error {
 	  "type": "label-element"
 	}
 */
+
+type AlertType int
+
+const (
+	Success AlertType = iota
+	Info
+	Error
+)
+
+func (at AlertType) MarshalJSON() ([]byte, error) {
+	switch at {
+	case Success:
+		return json.Marshal("success")
+	case Info:
+		return json.Marshal("info")
+	case Error:
+		return json.Marshal("error")
+	default:
+		return nil, fmt.Errorf("invalid AlertType value")
+	}
+}
+
+func (at *AlertType) UnmarshalJSON(data []byte) error {
+	var typeValue string
+	if err := json.Unmarshal(data, &typeValue); err != nil {
+		return err
+	}
+
+	switch typeValue {
+	case "success":
+		*at = Success
+	case "info":
+		*at = Info
+	case "error":
+		*at = Error
+	default:
+		return errors.New("invalid AlertType value: " + typeValue)
+	}
+
+	return nil
+}
+
 type LabelElement struct {
-	Computed    string `json:"computed,omitempty"`
-	If          string `json:"if,omitempty"`
-	CustomClass string `json:"customClass,omitempty"`
-	Label       *Label `json:"label,omitempty"`
-	Type        string `json:"type"`
+	Computed    string     `json:"computed,omitempty"`
+	If          string     `json:"if,omitempty"`
+	CustomClass string     `json:"customClass,omitempty"`
+	Label       *Label     `json:"label,omitempty"`
+	Type        string     `json:"type"`
+	AlertInfo   *AlertInfo `json:"alertInfo,omitempty"`
 }
 
 /*
@@ -736,6 +780,20 @@ type Label struct {
 	Text         string `json:"text,omitempty"`
 	HasLine      bool   `json:"hasLine,omitempty"`
 	IsSubsection bool   `json:"isSubsection,omitempty"`
+}
+
+type AlertInfo struct {
+	Show         bool          `json:"show,omitempty"`
+	Type         *AlertType    `json:"type"`
+	HideIcon     bool          `json:"hideIcon,omitempty"`
+	ActionButton *ActionButton `json:"actionButton,omitempty"`
+}
+
+type ActionButton struct {
+	Show      bool            `json:"show"`
+	Title     string          `json:"title"`
+	IconClass string          `json:"iconClass"`
+	Action    json.RawMessage `json:"action"`
 }
 
 type RadioElementOption struct {
