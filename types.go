@@ -548,6 +548,7 @@ type SelectElement struct {
 	AddNewButton           *AddNewButton `json:"add_new_button,omitempty"`
 	Refresh                bool          `json:"refresh,omitempty"`
 	Sortable               bool          `json:"sortable,omitempty"`
+	DisableUnselect        bool          `json:"disableUnselect,omitempty"`
 }
 
 type AddNewButton struct {
