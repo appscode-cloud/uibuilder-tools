@@ -517,6 +517,7 @@ type RadioElement struct {
 	Individualitemdisabilitycheck string        `json:"individualItemDisabilityCheck,omitempty"`
 	Disabled                      *StringBool   `json:"disabled,omitempty"`
 	Fetch                         string        `json:"fetch,omitempty"`
+	Required                      bool          `json:"required,omitempty"`
 }
 
 /*
