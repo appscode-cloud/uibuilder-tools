@@ -518,6 +518,7 @@ type RadioElement struct {
 	Disabled                      *StringBool   `json:"disabled,omitempty"`
 	Fetch                         string        `json:"fetch,omitempty"`
 	Required                      bool          `json:"required,omitempty"`
+	IsHorizontal                  bool          `json:"isHorizontal,omitempty"`
 }
 
 /*
