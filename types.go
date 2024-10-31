@@ -447,6 +447,7 @@ type InputElement struct {
 	ValidationRuleObject *ValidationRule `json:"validationRuleObject,omitempty"`
 	Fetch                string          `json:"fetch,omitempty"`
 	InputType            string          `json:"inputType,omitempty"`
+	Description          *Description    `json:"description,omitempty"`
 }
 
 type ValidationRule struct {
@@ -549,6 +550,7 @@ type SelectElement struct {
 	KeepEmpty              bool          `json:"keepEmpty,omitempty"`
 	AddNewButton           *AddNewButton `json:"add_new_button,omitempty"`
 	Refresh                bool          `json:"refresh,omitempty"`
+	HasGroup               *bool         `json:"hasGroup,omitempty"`
 	Sortable               bool          `json:"sortable,omitempty"`
 	DisableUnselect        bool          `json:"disableUnselect,omitempty"`
 }
@@ -667,11 +669,17 @@ type SingleStepForm struct {
 	Element       *SingleStepFormElement   `json:"element,omitempty"`
 	CustomClass   string                   `json:"customClass,omitempty"`
 	ShowLabel     bool                     `json:"show_label,omitempty"`
-	HideForm      bool                     `json:"hideForm,omitempty"`
+	HideForm      *bool                    `json:"hideForm,omitempty"`
 	Computed      string                   `json:"computed,omitempty"`
 	KeepEmpty     bool                     `json:"keepEmpty,omitempty"`
 	ToggleOption  *ToggleOption            `json:"toggleOption,omitempty"`
 	OnChange      string                   `json:"onChange,omitempty"`
+	Accordion     *bool                    `json:"accordion,omitempty"`
+	Description   *Description             `json:"description,omitempty"`
+}
+
+type Description struct {
+	Text *string `json:"text,omitempty"`
 }
 
 type ToggleOption struct {
