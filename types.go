@@ -550,7 +550,7 @@ type SelectElement struct {
 	KeepEmpty              bool          `json:"keepEmpty,omitempty"`
 	AddNewButton           *AddNewButton `json:"add_new_button,omitempty"`
 	Refresh                bool          `json:"refresh,omitempty"`
-	HasGroup               *bool         `json:"hasGroup,omitempty"`
+	HasGroup               any           `json:"hasGroup,omitempty"`
 	Sortable               bool          `json:"sortable,omitempty"`
 	DisableUnselect        bool          `json:"disableUnselect,omitempty"`
 }
