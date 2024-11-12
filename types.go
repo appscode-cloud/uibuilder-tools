@@ -466,10 +466,11 @@ type ValidationRule struct {
 	}
 */
 type TextareaElement struct {
-	If     string    `json:"if,omitempty"`
-	Type   string    `json:"type"`
-	Schema SchemaRef `json:"schema"`
-	Label  *Label    `json:"label,omitempty"`
+	If       string    `json:"if,omitempty"`
+	Type     string    `json:"type"`
+	Schema   SchemaRef `json:"schema"`
+	Required bool      `json:"required,omitempty"`
+	Label    *Label    `json:"label,omitempty"`
 }
 
 /*
