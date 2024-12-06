@@ -729,6 +729,9 @@ type SingleStepFormArray struct {
 	Computed                      string                     `json:"computed,omitempty"`
 	IsCreateDisabled              bool                       `json:"isCreateDisabled,omitempty"`
 	Disabled                      *StringBool                `json:"disabled,omitempty"`
+	ResetDependencyPath           string                     `json:"resetDependencyPath,omitempty"`
+	ResetOnChange                 bool                       `json:"resetOnChange,omitempty"`
+	TemporaryPath                 string                     `json:"temporaryPath,omitempty"`
 }
 
 type SingleStepFormArrayElement struct {
