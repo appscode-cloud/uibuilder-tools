@@ -471,6 +471,7 @@ type TextareaElement struct {
 	Schema   SchemaRef `json:"schema"`
 	Required bool      `json:"required,omitempty"`
 	Label    *Label    `json:"label,omitempty"`
+	OnChange string    `json:"onChange,omitempty"`
 }
 
 /*
