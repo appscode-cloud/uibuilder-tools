@@ -896,6 +896,7 @@ type MultiselectElement struct {
 	Options                       []string  `json:"options,omitempty"`
 	If                            string    `json:"if,omitempty"`
 	OnChange                      string    `json:"onChange,omitempty"`
+	Required                      bool      `json:"required,omitempty"`
 }
 
 /*
