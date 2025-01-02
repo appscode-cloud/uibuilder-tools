@@ -374,6 +374,7 @@ const (
 	Success AlertType = iota
 	Info
 	Error
+	Neutral
 )
 
 func (at AlertType) MarshalJSON() ([]byte, error) {
@@ -384,6 +385,8 @@ func (at AlertType) MarshalJSON() ([]byte, error) {
 		return json.Marshal("info")
 	case Error:
 		return json.Marshal("error")
+	case Neutral:
+		return json.Marshal("neutral")
 	default:
 		return nil, fmt.Errorf("invalid AlertType value")
 	}
@@ -402,6 +405,8 @@ func (at *AlertType) UnmarshalJSON(data []byte) error {
 		*at = Info
 	case "error":
 		*at = Error
+	case "neutral":
+		*at = Neutral
 	default:
 		return errors.New("invalid AlertType value: " + typeValue)
 	}
