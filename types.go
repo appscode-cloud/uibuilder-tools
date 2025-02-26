@@ -738,6 +738,7 @@ type SingleStepFormArray struct {
 	ResetDependencyPath           string                     `json:"resetDependencyPath,omitempty"`
 	ResetOnChange                 bool                       `json:"resetOnChange,omitempty"`
 	TemporaryPath                 string                     `json:"temporaryPath,omitempty"`
+	HideDetailsButton             bool                       `json:"hideDetailsButton,omitempty"`
 }
 
 type SingleStepFormArrayElement struct {
