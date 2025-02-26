@@ -903,6 +903,7 @@ type MultiselectElement struct {
 	If                            string    `json:"if,omitempty"`
 	OnChange                      string    `json:"onChange,omitempty"`
 	Required                      bool      `json:"required,omitempty"`
+	CustomClass                   string    `json:"customClass,omitempty"`
 }
 
 /*
@@ -976,7 +977,7 @@ type Editor struct {
 }
 
 type AnchorElement struct {
-	CustomClass string    `json:"customClass"`
+	CustomClass string    `json:"customClass,omitempty"`
 	Label       *Label    `json:"label,omitempty"`
 	Type        string    `json:"type"`
 	URL         AnchorURL `json:"url"`
