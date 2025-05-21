@@ -456,7 +456,9 @@ type InputElement struct {
 }
 
 type ValidationRule struct {
-	Regex string `json:"regex"`
+	Regex     string `json:"regex,omitempty"`
+	Func      string `json:"func,omitempty"`
+	ErrorText string `json:"errorText,omitempty"`
 }
 
 /*
