@@ -781,6 +781,7 @@ type ListInputForm struct {
 	Element                       InputElement `json:"element"`
 	Label                         *Label       `json:"label"`
 	IndividualItemDisabilityCheck string       `json:"individualItemDisabilityCheck,omitempty"`
+	Required                      bool         `json:"required,omitempty"`
 }
 
 type MultiStepForm struct {
