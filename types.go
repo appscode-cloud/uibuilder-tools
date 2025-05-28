@@ -774,14 +774,15 @@ type SingleStepFormArrayElement struct {
 	}
 */
 type ListInputForm struct {
-	If                            string       `json:"if,omitempty"`
-	Schema                        SchemaRef    `json:"schema"`
-	Haslinelabel                  bool         `json:"hasLineLabel,omitempty"`
-	Type                          string       `json:"type"`
-	Element                       InputElement `json:"element"`
-	Label                         *Label       `json:"label"`
-	IndividualItemDisabilityCheck string       `json:"individualItemDisabilityCheck,omitempty"`
-	Required                      bool         `json:"required,omitempty"`
+	If                            string          `json:"if,omitempty"`
+	Schema                        SchemaRef       `json:"schema"`
+	Haslinelabel                  bool            `json:"hasLineLabel,omitempty"`
+	Type                          string          `json:"type"`
+	Element                       InputElement    `json:"element"`
+	Label                         *Label          `json:"label"`
+	IndividualItemDisabilityCheck string          `json:"individualItemDisabilityCheck,omitempty"`
+	Required                      bool            `json:"required,omitempty"`
+	ValidationRuleObject          *ValidationRule `json:"validationRuleObject,omitempty"`
 }
 
 type MultiStepForm struct {
