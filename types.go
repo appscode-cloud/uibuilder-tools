@@ -741,6 +741,7 @@ type SingleStepFormArray struct {
 	ResetOnChange                 bool                       `json:"resetOnChange,omitempty"`
 	TemporaryPath                 string                     `json:"temporaryPath,omitempty"`
 	HideDetailsButton             bool                       `json:"hideDetailsButton,omitempty"`
+	ValidationRuleObject          *ValidationRule            `json:"validationRuleObject,omitempty"`
 }
 
 type SingleStepFormArrayElement struct {
