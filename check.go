@@ -28,6 +28,7 @@ import (
 	"github.com/spf13/cobra"
 	diff "github.com/yudai/gojsondiff"
 	"github.com/yudai/gojsondiff/formatter"
+	"gomodules.xyz/sets"
 	"sigs.k8s.io/yaml"
 )
 
@@ -41,6 +42,7 @@ var (
 	schemaFile              = ""
 	fmtOnly                 bool
 	skipSchemaRefValidation bool
+	skipFiles               []string
 )
 
 func NewCheckCommand() *cobra.Command {
@@ -55,7 +57,7 @@ func NewCheckCommand() *cobra.Command {
 				}
 				return checkFile(uiFile, schemaFile)
 			}
-			return checkDir(wizardDir)
+			return checkDir(wizardDir, sets.NewString(skipFiles...))
 		},
 	}
 	flags := cmd.Flags()
@@ -64,11 +66,12 @@ func NewCheckCommand() *cobra.Command {
 	flags.StringVar(&schemaFile, "schema-file", schemaFile, "Path to schema file")
 	flags.BoolVar(&fmtOnly, "fmt-only", fmtOnly, "Format ui.json file only")
 	flags.BoolVar(&skipSchemaRefValidation, "skip-schema-ref-validation", skipSchemaRefValidation, "Skip schema ref validation")
+	flags.StringSliceVar(&skipFiles, "skip-files", skipFiles, "Skip files from validation")
 
 	return cmd
 }
 
-func checkDir(root string) error {
+func checkDir(root string, skipFiles sets.String) error {
 	matches, err := filepath.Glob(filepath.Join(root, "**", "ui"))
 	if err != nil {
 		return err
@@ -92,7 +95,7 @@ func checkDir(root string) error {
 				return err
 			}
 			schemaFile = filepath.Join(dir, "values.openapiv3_schema.yaml")
-			if !fmtOnly && fileExists(schemaFile) {
+			if !fmtOnly && fileExists(schemaFile) && !skipFiles.Has(fp) {
 				if err = checkFile(fp, schemaFile); err != nil {
 					return err
 				}

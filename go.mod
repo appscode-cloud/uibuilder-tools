@@ -7,6 +7,7 @@ require (
 	github.com/spf13/cobra v1.7.0
 	github.com/yudai/gojsondiff v1.0.0
 	gomodules.xyz/logs v0.0.7
+	gomodules.xyz/sets v0.2.1
 	gomodules.xyz/x v0.0.15
 	k8s.io/klog/v2 v2.100.1
 	sigs.k8s.io/yaml v1.3.0
@@ -28,7 +29,6 @@ require (
 	github.com/yudai/pp v2.0.1+incompatible // indirect
 	gomodules.xyz/clock v0.0.0-20200817085942-06523dba733f // indirect
 	gomodules.xyz/flags v0.1.3 // indirect
-	gomodules.xyz/sets v0.2.1 // indirect
 	gomodules.xyz/wait v0.2.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
