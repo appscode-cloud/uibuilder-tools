@@ -1,6 +1,6 @@
 module go.bytebuilders.dev/uibuilder-tools
 
-go 1.25
+go 1.25.0
 
 require (
 	github.com/go-openapi/jsonreference v0.21.2
@@ -33,9 +33,8 @@ require (
 	github.com/yudai/pp v2.0.1+incompatible // indirect
 	go.yaml.in/yaml/v2 v2.4.3 // indirect
 	go.yaml.in/yaml/v3 v3.0.4 // indirect
-	golang.org/x/net v0.47.0 // indirect
-	golang.org/x/sys v0.39.0 // indirect
-	golang.org/x/text v0.32.0 // indirect
+	golang.org/x/net v0.55.0 // indirect
+	golang.org/x/sys v0.45.0 // indirect
 	gomodules.xyz/clock v0.0.0-20200817085942-06523dba733f // indirect
 	gomodules.xyz/flags v0.1.3 // indirect
 	gomodules.xyz/wait v0.2.0 // indirect
